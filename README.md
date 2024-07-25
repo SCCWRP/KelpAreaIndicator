@@ -15,12 +15,12 @@ devtools::install_github("SCCWRP/KelpAreaIndicator")
 
 After installation, all functions have help pages accessible through the `?` operator.
 
-```r
+``` r
 library(KelpAreaIndicator)
 ?segment_landsat_data
 ```
 
 To view a simple example of using the package:
-```r
+``` r
 vignette("landsat-time-series", package = "KelpAreaIndicator")
 ```
