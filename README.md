@@ -8,7 +8,7 @@ The goal of the KelpAreaIndicator R package is to explore the Landsat kelp area 
 You can install the development version of KelpAreaIndicator with the `install_github` function from the `devtools` package like so:
 
 ``` r
-devtools::install_github("SCCWRP/KelpAreaIndicator")
+devtools::install_github("SCCWRP/KelpAreaIndicator", build_vignettes = TRUE, build_manual = TRUE)
 ```
 
 ## Help
@@ -22,5 +22,5 @@ library(KelpAreaIndicator)
 
 To view a simple example of using the package:
 ``` r
-vignette("landsat-time-series", package = "KelpAreaIndicator")
+vignette("KelpAreaIndicator", package = "KelpAreaIndicator")
 ```
