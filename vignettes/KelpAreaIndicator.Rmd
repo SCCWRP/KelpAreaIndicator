@@ -134,10 +134,10 @@ The quarterly time series is aggregated by summing the quarterly area data for a
 * `Segment_ID`: The ID of the kelp area segment
 * `max_occupiable`: The maximum occupiable kelp area for the given segment. This column repeats the same value for all rows in a single kelp area segment
 * `historical_med`: The historical (1984-2013) median kelp area for the segment. The median is computed across the annualized kelp area values. This column repeats the same value for all rows in a single kelp area segment
-* `quarter`: The quarter in the time series, otherwise not present
+* `quarter`: The quarter in the time series. Not present in the annual time series
 * `year`: Year in the time series
 * `date`: Date representation of the year/quarter, for simpler plotting
-* `area_abs`: Kelp area in absolute magnitude, in km^2
+* `area_abs`: Kelp area in absolute magnitude, in km$^2$
 * `area_hist`: Kelp area relative to the historical median, expressed as a percentage
 * `area_pct`: Kelp area relative to the maximum occupiable kelp area, expressed as a percentage
 
@@ -168,9 +168,9 @@ quarterly_ts
 
 
 ### Annual time series
-We provide several options for annualizing the quarterly Landsat area data, `max_first`, `sum_first`, or extracting a specific quarter each year, discussed below. The annualized time series data frame is identical to the quarterly time series data, except there is no `quarter` column.
+We provide several options for annualizing the quarterly Landsat area data, `max_first`, `sum_first`, or extracting a specific quarter for each year, discussed below. The annualized time series data frame is identical to the quarterly time series data, except there is no `quarter` column.
 
-Note that the historical median area (`historical_med`) and maximum occupiable area (`max_occupiable`) are given per `Segment_ID` as well, repeated for every row of its time series. The historical median is calculated across the *annualized* values for 1984 to 2013, inclusive. 
+Note that the historical median area (`historical_med`) and maximum occupiable area (`max_occupiable`) are given per `Segment_ID`, repeated for every row of its time series. The historical median is calculated across the *annualized* values from 1984 to 2013, inclusive. 
 
 The `max_first` annualization method will loop through all Landsat pixels and for each year of the time series, it will select the maximum value that that pixel attained in that year. Then, these maximum values are added together for all pixels in each segment, so that the resulting time series is annual for each kelp segment.
 
