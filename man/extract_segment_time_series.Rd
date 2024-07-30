@@ -48,6 +48,7 @@ computed across the annualized kelp area values. This column repeats the same va
 in a single kelp area segment
 \item \code{quarter}*: If \code{frequency == "quarterly"}, the quarter in the time series, otherwise not present
 \item \code{year}: Year in the time series
+\item \code{date}: date representation of the year/quarter, for simpler plotting
 \item \code{area_abs}: Kelp area in absolute magnitude, in km^2
 \item \code{area_hist}: Kelp area relative to the historical median, expressed as a percentage
 \item \code{area_pct}: Kelp area relative to the maximum occupiable kelp area, expressed as a percentage

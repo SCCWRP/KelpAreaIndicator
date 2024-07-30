@@ -32,6 +32,7 @@
 #'  in a single kelp area segment
 #'  * `quarter`*: If `frequency == "quarterly"`, the quarter in the time series, otherwise not present
 #'  * `year`: Year in the time series
+#'  * `date`: date representation of the year/quarter, for simpler plotting
 #'  * `area_abs`: Kelp area in absolute magnitude, in km^2
 #'  * `area_hist`: Kelp area relative to the historical median, expressed as a percentage
 #'  * `area_pct`: Kelp area relative to the maximum occupiable kelp area, expressed as a percentage
