@@ -9,7 +9,7 @@ segment_landsat_data(
   lter_file_path,
   kelp_segments_file_path,
   ...,
-  segment_id = "all"
+  fractional_pixels = TRUE
 )
 }
 \arguments{
@@ -19,8 +19,9 @@ segment_landsat_data(
 
 \item{...}{unused}
 
-\item{segment_id}{either "all" or a character vector containing the subset of
-\code{segment_id}'s of interest, e.g. \code{c("CA_71", "CA_78")}}
+\item{fractional_pixels}{whether to consider fractional area values of pixels, e.g.
+if a pixel in the Landsat data has a value of 66 m^2, setting \code{fractional_pixels = FALSE}
+will treat the pixel as 900 m^2 instead}
 }
 \value{
 A dataframe with rows for each pixel, with the following columns:

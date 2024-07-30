@@ -9,8 +9,9 @@
 #' @param lter_file_path character string path to the landsat netCDF file
 #' @param kelp_segments_file_path character string path to the kelp segments shapefile
 #' @param ... unused
-#' @param segment_id either "all" or a character vector containing the subset of
-#' `segment_id`'s of interest, e.g. `c("CA_71", "CA_78")`
+#' @param fractional_pixels whether to consider fractional area values of pixels, e.g.
+#' if a pixel in the Landsat data has a value of 66 m^2, setting `fractional_pixels = FALSE`
+#' will treat the pixel as 900 m^2 instead
 #'
 #' @export
 #' @return A dataframe with rows for each pixel, with the following columns:
@@ -21,7 +22,11 @@
 #'  * ... : subsequent quarters and years
 #'
 #' Segments that do not have any pixels ever are represented as rows of `NA` values
-segment_landsat_data <- function(lter_file_path, kelp_segments_file_path, ..., segment_id = "all") {
+segment_landsat_data <- function(
+    lter_file_path,
+    kelp_segments_file_path,
+    ...,
+    fractional_pixels = TRUE) {
   nc_file <- ncdf4::nc_open(lter_file_path)
 
   #lon, lat, area, year from netCDF file, as matrices
@@ -30,18 +35,12 @@ segment_landsat_data <- function(lter_file_path, kelp_segments_file_path, ..., s
   area <- ncdf4::ncvar_get(nc_file, varid = "area")
   nc_year <- ncdf4::ncvar_get(nc_file, varid = "year")
 
+  if (!fractional_pixels) {
+    area[area > 0] <- 900
+  }
+
   # read in the kelp segments shapefile
   kelp_segments <- sf::st_read(kelp_segments_file_path)
-
-  # if a segment_id or subset of segment_id's are specified, make sure
-  # that they are all in the kelp_segments shapefile
-  if (segment_id != "all") {
-    if (!all(segment_id %in% kelp_segments$Segment_ID)) {
-      stop("not all values in `segment_id` are present in the kelp segments shapefile")
-    }
-    kelp_segments <- kelp_segments |>
-      dplyr::filter(Segment_ID %in% segment_id)
-  }
 
   # set up data frame to be processed
   # coerces the "area" matrix to dataframe columns with area.1 format
