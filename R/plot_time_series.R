@@ -6,7 +6,8 @@
 #' * "absolute": absolute value of the kelp area, in km^2
 #' * "percent": kelp area relative to the maximum occupiable area, expressed as a percentage
 #' * "historical": kelp area relative to the historical median, expressed as a percentage
-#' @param segment_id The segment ID to plot
+#' @param segment_id The segment ID(s) to plot. The default option `segment_id = NULL` will plot
+#' the first segment in the time series
 #'
 #' @return ggplot object for the time series
 #' @export
@@ -14,11 +15,16 @@ plot_time_series <- function(
     kelp_area_time_series,
     ...,
     type = c("absolute", "percent", "historical"),
-    segment_id = "CA_78") {
+    segment_id = NULL) {
+
   type <- rlang::arg_match(type)
-  if (length(segment_id) > 1) {
-    stop("only one `segment_id` may be plotted at once")
-  } else if (!segment_id %in% kelp_area_time_series$Segment_ID) {
+
+
+  if (is.null(segment_id)) {
+    segment_id <- sort(kelp_area_time_series$Segment_ID)[1]
+  }
+
+  if (!is.null(segment_id) & !all(segment_id %in% kelp_area_time_series$Segment_ID)) {
     stop("`segment_id` not present in `kelp_area_time_series`")
   }
 
@@ -40,18 +46,19 @@ plot_time_series <- function(
     historical = "% of Historical Median"
   )
 
-  year_breaks <- min(kelp_area_time_series$year):max(kelp_area_time_series$year)
-  ggplot2::ggplot(plot_data, ggplot2::aes(x = year, y = y_val, ...)) +
+  ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, color = Segment_ID, ...)) +
     ggplot2::geom_line() +
-    ggplot2::scale_x_continuous(breaks = year_breaks) +
-    ggplot2::labs(y = y_lab, x = "Year", title = paste("Segment", segment_id)) +
+    ggplot2::lims(y = c(0, NA)) +
+    ggplot2::scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+    ggplot2::labs(y = y_lab, x = "Year", color = "Kelp Segment") +
     ggplot2::theme_bw() +
     ggplot2::theme(
       panel.grid.minor = ggplot2::element_blank(),
       panel.grid.major.x = ggplot2::element_blank(),
       axis.text.x = ggplot2::element_text(angle = 60, vjust = 1, hjust = 1),
-      legend.position = "inside",
-      legend.position.inside = c(0.85, 0.85),
+      legend.position = "right",
+      legend.justification = c(0, 1),
       legend.box.background = ggplot2::element_rect(color = "black")
     )
 }
+
