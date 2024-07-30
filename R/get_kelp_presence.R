@@ -13,7 +13,7 @@
 #' @param no_kelp_bound Upper bound, in percent of segment area, for the "No Historical Kelp"
 #' category. Default is 0.02
 #' @param ephemeral_kelp_bound Upper bound, in percentage of segment area, for the "Ephemeral
-#' Kelp" category. Default is 0.05
+#' Kelp" category. Default is 0.15
 #'
 #' @return A dataframe with the following columns:
 #'
@@ -32,7 +32,7 @@ get_kelp_presence <- function(
     kelp_segments_file_path,
     ...,
     no_kelp_bound = 0.02,
-    ephemeral_kelp_bound = 0.05) {
+    ephemeral_kelp_bound = 0.15) {
 
   kelp_presence <- data.frame(Segment_ID = segmented_landsat_data$Segment_ID)
 
