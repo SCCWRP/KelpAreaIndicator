@@ -38,7 +38,7 @@
 #'  * `area_pct`: Kelp area relative to the maximum occupiable kelp area, expressed as a percentage
 #'
 #' @seealso [KelpAreaIndicator::get_max_occupiable_area()]
-extract_segment_time_series <- function(
+extract_time_series <- function(
     segmented_landsat_data,
     ...,
     frequency = c("annual", "quarterly"),

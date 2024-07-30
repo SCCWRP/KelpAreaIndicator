@@ -126,7 +126,7 @@ segmented_landsat_data |>
 ```
 
 ## Extracting time series
-The quarterly Landsat time series is extracted with the `extract_segment_time_series()` function. This function aggregates the Landsat data per segment, and either the quarterly or annualized time series for each segment can be extracted. A subset of the kelp segments can be extracted using the `segment_id` parameter.
+The quarterly Landsat time series is extracted with the `extract_time_series()` function. This function aggregates the Landsat data per segment, and either the quarterly or annualized time series for each segment can be extracted. A subset of the kelp segments can be extracted using the `segment_id` parameter.
 
 ### Quarterly time series
 The quarterly time series is aggregated by summing the quarterly area data for all pixels within each segment. The resulting data frame contains 9 columns:
@@ -143,7 +143,7 @@ The quarterly time series is aggregated by summing the quarterly area data for a
 
 
 ``` r
-quarterly_ts <- extract_segment_time_series(
+quarterly_ts <- extract_time_series(
   segmented_landsat_data = segmented_landsat_data,
   frequency = "quarterly"
 )
@@ -175,7 +175,7 @@ Note that the historical median area (`historical_med`) and maximum occupiable a
 The `max_first` annualization method will loop through all Landsat pixels and for each year of the time series, it will select the maximum value that that pixel attained in that year. Then, these maximum values are added together for all pixels in each segment, so that the resulting time series is annual for each kelp segment.
 
 ``` r
-max_first_annual_ts <- extract_segment_time_series(
+max_first_annual_ts <- extract_time_series(
   segmented_landsat_data = segmented_landsat_data,
   annualization_method = "max_first"
 )
@@ -202,7 +202,7 @@ The `sum_first` method will sum the time series for all pixels in each kelp segm
 
 
 ``` r
-sum_first_annual_ts <- extract_segment_time_series(
+sum_first_annual_ts <- extract_time_series(
   segmented_landsat_data = segmented_landsat_data,
   annualization_method = "sum_first"
 )
@@ -228,7 +228,7 @@ sum_first_annual_ts
 Each of the `Q1`, `Q2`, `Q3`, and `Q4` options will sum together all pixels within each segment and extract its respective quarter within each year.
 
 ``` r
-q3_annual_ts <- extract_segment_time_series(
+q3_annual_ts <- extract_time_series(
   segmented_landsat_data = segmented_landsat_data,
   annualization_method = "Q3"
 )
