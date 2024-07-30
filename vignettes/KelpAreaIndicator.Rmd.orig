@@ -34,7 +34,10 @@ kelp_segments_file_path <- "../data/uswc_2023_v1"
 
 ## Assigning segments to Landsat pixels
 
-The `segment_landsat_data()` function will load the Landsat netCDF file and assign each pixel to its respective segment, defined in the kelp segments shapefile. The resulting data frame consists of rows of pixels from the Landsat data, and columns of quarters for each year of the time series. The `Segment_ID` column indicates which segment that the pixel belongs to. The `lon` and `lat` columns are the longitude and latitude of the pixel, respectively. The remaining columns represent the quarterly kelp area time series of that pixel, in m^2.
+The `segment_landsat_data()` function will load the Landsat netCDF file and assign each pixel to its respective segment, defined in the kelp segments shapefile. Each pixel in the Landsat data represents a 900 m$^2$ area, so the `segment_landsat_data()` function provides an option to treat the area values as either 0 or 900 m$^2$, rather than the fractional value between 0 and 900, with the `fractional_pixels` parameter. Setting `fractional_pixels = FALSE` will enable this binary treatment of the pixel data.
+
+The resulting data frame consists of rows of pixels from the Landsat data, and columns of quarters for each year of the time series. The `Segment_ID` column indicates which segment that the pixel belongs to. The `lon` and `lat` columns are the longitude and latitude of the pixel, respectively. The remaining columns represent the quarterly kelp area time series of that pixel, in m$^2$.
+
 
 ```{r segment_data}
 segmented_landsat_data <- segment_landsat_data(
@@ -43,6 +46,14 @@ segmented_landsat_data <- segment_landsat_data(
 )
 
 segmented_landsat_data
+
+segmented_landsat_data_whole_pixels <- segment_landsat_data(
+  lter_file_path = lter_file_path,
+  kelp_segments_file_path = kelp_segments_file_path,
+  fractional_pixels = FALSE
+)
+
+segmented_landsat_data_whole_pixels
 ```
 If a kelp segment never contains any pixels with kelp coverage, these segments are represented by a single row of `NA` values for the entire time series.
 ```{r show_na_segment}
@@ -50,46 +61,98 @@ segmented_landsat_data |>
   dplyr::filter(Segment_ID == "CA_103")
 ```
 
-## Annual time series
-The quarterly Landsat time series is transformed to an annual time series with the `annualize_time_series()` function. We provide two methods to achieve this, `max_first` and `sum_first`, discussed below. The annualized time series data frame contains three columns for representing the annual kelp area time series:
+## Extracting time series
+The quarterly Landsat time series is extracted with the `extract_segment_time_series()` function. This function aggregates the Landsat data per segment, and either the quarterly or annualized time series for each segment can be extracted. A subset of the kelp segments can be extracted using the `segment_id` parameter.
 
-* `area_abs`: kelp area in absolute magnitude, in km^2
-* `area_hist`: kelp area relative to the historical median, expressed as a percentage
-* `area_pct`: kelp area relative to the maximum occupiable kelp area, expressed as a percentage
+### Quarterly time series
+The quarterly time series is aggregated by summing the quarterly area data for all pixels within each segment. The resulting data frame contains 9 columns:
 
-Note that the historical median area (`historical_med`) and maximum occupiable area (`max_occupiable`) are given per `Segment_ID` as well, repeated for every row of its time series. The historical median is calculated as the median of the maximum annual kelp area, depending on the `annualization_method`, for the years 1984 to 2013, inclusive.
+* `Segment_ID`: The ID of the kelp area segment
+* `max_occupiable`: The maximum occupiable kelp area for the given segment. This column repeats the same value for all rows in a single kelp area segment
+* `historical_med`: The historical (1984-2013) median kelp area for the segment. The median is computed across the annualized kelp area values. This column repeats the same value for all rows in a single kelp area segment
+* `quarter`: The quarter in the time series, otherwise not present
+* `year`: Year in the time series
+* `date`: Date representation of the year/quarter, for simpler plotting
+* `area_abs`: Kelp area in absolute magnitude, in km^2
+* `area_hist`: Kelp area relative to the historical median, expressed as a percentage
+* `area_pct`: Kelp area relative to the maximum occupiable kelp area, expressed as a percentage
 
-The `max_first` method will loop through all Landsat pixels and for each year of the time series, it will select the maximum value that that pixel attained in that year. Then, these maximum values are added together for all pixels in each segment, so that the resulting time series is annual for each kelp segment.
-```{r max_first_time_series}
-max_first_time_series <- annualize_time_series(
+```{r quarterly_ts}
+quarterly_ts <- extract_segment_time_series(
+  segmented_landsat_data = segmented_landsat_data,
+  frequency = "quarterly"
+)
+
+quarterly_ts
+```
+
+
+### Annual time series
+We provide several options for annualizing the quarterly Landsat area data, `max_first`, `sum_first`, or extracting a specific quarter each year, discussed below. The annualized time series data frame is identical to the quarterly time series data, except there is no `quarter` column.
+
+Note that the historical median area (`historical_med`) and maximum occupiable area (`max_occupiable`) are given per `Segment_ID` as well, repeated for every row of its time series. The historical median is calculated across the *annualized* values for 1984 to 2013, inclusive. 
+
+The `max_first` annualization method will loop through all Landsat pixels and for each year of the time series, it will select the maximum value that that pixel attained in that year. Then, these maximum values are added together for all pixels in each segment, so that the resulting time series is annual for each kelp segment.
+```{r max_first_annual_ts}
+max_first_annual_ts <- extract_segment_time_series(
   segmented_landsat_data = segmented_landsat_data,
   annualization_method = "max_first"
 )
-max_first_time_series
+
+max_first_annual_ts
 ```
 
 The `sum_first` method will sum the time series for all pixels in each kelp segment, so that each kelp segment has a quarterly time series. Then, the maximum for each segment within each year is selected, so that the time series is annual.
 
-```{r sum_first_time_series}
-sum_first_time_series <- annualize_time_series(
+```{r sum_first_annual_ts}
+sum_first_annual_ts <- extract_segment_time_series(
   segmented_landsat_data = segmented_landsat_data,
   annualization_method = "sum_first"
 )
-sum_first_time_series
+
+sum_first_annual_ts
 ```
 
-Compare the two methods applied to the `CA_78` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. Here, we've modified it and added another `ggplot2` line layer to visualize the difference between the `max_first` and `sum_first` annualization methods.
-```{r time_series_plot_comparison, fig.dpi=300, fig.height = 4.5, fig.width = 8, out.height="400px", out.width="100%"}
+Each of the `Q1`, `Q2`, `Q3`, and `Q4` options will sum together all pixels within each segment and extract its respective quarter within each year.
+```{r q3_annual_ts}
+q3_annual_ts <- extract_segment_time_series(
+  segmented_landsat_data = segmented_landsat_data,
+  annualization_method = "Q3"
+)
+
+q3_annual_ts
+```
+
+
+## Plotting time series
+Compare different methods of annualization applied to the `CA_78` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. Here, we've modified it and added more `ggplot2` line layers to visualize the difference between the `max_first`, `sum_first`, and `Q3` annualization methods.
+```{r time_series_plot_comparison, fig.dpi=300, fig.height = 4.5, fig.width = 8, out.height="400px", out.width="95%", fig.align='center'}
+# combine all methods into a single data frame for plotting
+annual_ts <- dplyr::bind_rows(
+  max_first_annual_ts |> dplyr::mutate(method = "Max first"), 
+  sum_first_annual_ts |> dplyr::mutate(method = "Sum first"),
+  q3_annual_ts |> dplyr::mutate(method = "Quarter 3")
+)
+
+# for grey background lines in plot
+other_ts <- annual_ts |> 
+  dplyr::filter(Segment_ID == "CA_78") |>
+  dplyr::rename(others = method)
+
 plot_time_series(
-  kelp_area_time_series = max_first_time_series, type = "absolute",
-  color = "Max first", segment_id = "CA_78"
+  kelp_area_time_series = annual_ts, 
+  type = "absolute", 
+  segment_id = "CA_78",
+  color = method
 ) +
   ggplot2::geom_line(
-    data = sum_first_time_series |> dplyr::filter(Segment_ID == "CA_78"),
-    mapping = ggplot2::aes(x = year, y = area_abs, color = "Sum first")
+    data = other_ts, 
+    mapping = ggplot2::aes(x = date, y = area_abs, group = others), 
+    alpha = 0.15,
+    inherit.aes = FALSE
   ) +
-  ggplot2::scale_color_manual(
-    name = NULL,
-    values = c("Max first" = "steelblue", "Sum first" = "firebrick")
-  )
+  ggplot2::scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
+  ggplot2::scale_color_viridis_d() +
+  ggplot2::labs(color = "Annualization\nMethod") +
+  ggplot2::facet_wrap(ggplot2::vars(method), scales = "free_x") 
 ```

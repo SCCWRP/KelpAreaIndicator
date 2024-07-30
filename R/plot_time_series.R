@@ -46,7 +46,14 @@ plot_time_series <- function(
     historical = "% of Historical Median"
   )
 
-  ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, color = Segment_ID, ...)) +
+  if (length(segment_id) > 1) {
+    base_plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, group = Segment_ID, ...))
+  }
+  else {
+    base_plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, ...))
+  }
+
+  base_plot +
     ggplot2::geom_line() +
     ggplot2::lims(y = c(0, NA)) +
     ggplot2::scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
