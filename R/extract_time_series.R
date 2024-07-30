@@ -76,7 +76,7 @@ extract_time_series <- function(
 
   # adding in the area relative to historical median and area relative
   # to max occupiable area metrics
-  time_series |>
+  time_series <- time_series |>
     dplyr::left_join(max_occupiable_kelp_area, by = "Segment_ID") |>
     dplyr::group_by(Segment_ID) |>
     dplyr::mutate(
@@ -91,6 +91,8 @@ extract_time_series <- function(
     dplyr::relocate(
       Segment_ID, max_occupiable, historical_med
     )
+
+  time_series
 }
 
 extract_annual_time_series <- function(segmented_landsat_data, annualization_method) {
@@ -182,15 +184,17 @@ extract_annual_time_series <- function(segmented_landsat_data, annualization_met
       dplyr::filter(quarter == annualization_method)
   }
 
-  annual_time_series |>
+  annual_time_series <- annual_time_series |>
     dplyr::mutate(
       date = as.Date(paste0(year, "-01-01"))
     ) |>
     dplyr::relocate(Segment_ID, year, date)
+
+  annual_time_series
 }
 
 extract_quarterly_time_series <- function(segmented_landsat_data) {
-  segmented_landsat_data |>
+  quarterly_time_series <- segmented_landsat_data |>
     dplyr::group_by(Segment_ID) |>
     dplyr::summarize(dplyr::across(
       .cols = dplyr::matches("Q[1-4]\\.[1-9]*"),
@@ -212,4 +216,6 @@ extract_quarterly_time_series <- function(segmented_landsat_data) {
       date = as.Date(date)
     ) |>
     dplyr::relocate(Segment_ID, quarter, year, date)
+
+  quarterly_time_series
 }

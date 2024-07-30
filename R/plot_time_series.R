@@ -53,7 +53,7 @@ plot_time_series <- function(
     base_plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, ...))
   }
 
-  base_plot +
+  time_series_plot <- base_plot +
     ggplot2::geom_line() +
     ggplot2::lims(y = c(0, NA)) +
     ggplot2::scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
@@ -67,5 +67,7 @@ plot_time_series <- function(
       legend.justification = c(0, 1),
       legend.box.background = ggplot2::element_rect(color = "black")
     )
+
+  time_series_plot
 }
 

@@ -52,7 +52,7 @@ get_kelp_presence <- function(
   kelp_segments <- sf::st_read(kelp_segments_file_path)
 
   # calculate the area of each polygon, convert to km2
-  kelp_segments |>
+  kelp_presence <- kelp_segments |>
     dplyr::mutate(
       segment_area = as.numeric(sf::st_area(kelp_segments)) / 1e6 # in km2
     ) |>
@@ -72,4 +72,6 @@ get_kelp_presence <- function(
     ) |>
     dplyr::select(-c(num_pixels, pixel_area)) |>
     dplyr::as_tibble()
+
+  kelp_presence
 }
