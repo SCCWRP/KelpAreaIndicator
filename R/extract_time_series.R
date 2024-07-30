@@ -46,7 +46,7 @@ extract_time_series <- function(
     segment_id = NULL) {
 
   # if a segment_id or subset of segment_id's are specified, make sure
-  # that they are all in the kelp_segments shapefile
+  # that they are all in the segmented_landsat_data
   if (!is.null(segment_id)) {
     if (!all(segment_id %in% segmented_landsat_data$Segment_ID)) {
       stop("not all values in `segment_id` are present in the segmented Landsat data")
