@@ -59,7 +59,7 @@ get_kelp_presence <- function(
     sf::st_drop_geometry() |>
     # add in the number of pixels, left join to include kelp segments that
     # never have any pixels
-    dplyr::left_join(kelp_presence) |>
+    dplyr::left_join(kelp_presence, by = "Segment_ID") |>
     dplyr::mutate(
       # assume each pixel has a max of 900 m2 area for this calculation
       pixel_area = num_pixels * 900 / 1e6, # in km2
