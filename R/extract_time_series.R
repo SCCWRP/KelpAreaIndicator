@@ -72,7 +72,7 @@ extract_time_series <- function(
     )
   }
   # calculate the maximum
-  max_occupiable_kelp_area <- get_max_occupiable_kelp_area(segmented_landsat_data)
+  max_occupiable_kelp_area <- get_max_occupiable_area(segmented_landsat_data)
 
   # adding in the area relative to historical median and area relative
   # to max occupiable area metrics

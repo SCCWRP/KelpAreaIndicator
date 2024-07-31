@@ -13,7 +13,7 @@
 #'
 #' @export
 #' @return A dataframe with the maximum occupiable area for each kelp segment
-get_max_occupiable_kelp_area <- function(segmented_landsat_data) {
+get_max_occupiable_area <- function(segmented_landsat_data) {
   # set up dataframe to process
   max_occupiable_kelp_area <- data.frame(Segment_ID = segmented_landsat_data$Segment_ID)
 
