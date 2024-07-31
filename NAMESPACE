@@ -2,6 +2,7 @@
 
 export(extract_time_series)
 export(get_kelp_presence)
+export(get_kelp_status)
 export(get_max_occupiable_kelp_area)
 export(plot_time_series)
 export(segment_landsat_data)
