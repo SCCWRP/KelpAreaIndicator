@@ -133,13 +133,13 @@ m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><m
 <span><span class="co">#&gt; 10 OR_21      -125.  42.8      NA       0       0      NA       0       0</span></span>
 <span><span class="co">#&gt; # ℹ 368,077 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 153 more variables: Q3.1985 &lt;int&gt;, Q4.1985 &lt;int&gt;, Q1.1986 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q2.1986 &lt;int&gt;, Q3.1986 &lt;int&gt;, Q4.1986 &lt;int&gt;, Q1.1987 &lt;int&gt;, Q2.1987 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q3.1987 &lt;int&gt;, Q4.1987 &lt;int&gt;, Q1.1988 &lt;int&gt;, Q2.1988 &lt;int&gt;, Q3.1988 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q4.1988 &lt;int&gt;, Q1.1989 &lt;int&gt;, Q2.1989 &lt;int&gt;, Q3.1989 &lt;int&gt;, Q4.1989 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q1.1990 &lt;int&gt;, Q2.1990 &lt;int&gt;, Q3.1990 &lt;int&gt;, Q4.1990 &lt;int&gt;, Q1.1991 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q2.1991 &lt;int&gt;, Q3.1991 &lt;int&gt;, Q4.1991 &lt;int&gt;, Q1.1992 &lt;int&gt;, …</span></span>
-<span></span>
-<span><span class="va">segmented_landsat_data_whole_pixels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_landsat_data.html">segment_landsat_data</a></span><span class="op">(</span></span>
+<span><span class="co">#&gt; #   Q2.1986 &lt;int&gt;, Q3.1986 &lt;int&gt;, Q4.1986 &lt;int&gt;, Q1.1987 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1987 &lt;int&gt;, Q3.1987 &lt;int&gt;, Q4.1987 &lt;int&gt;, Q1.1988 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1988 &lt;int&gt;, Q3.1988 &lt;int&gt;, Q4.1988 &lt;int&gt;, Q1.1989 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1989 &lt;int&gt;, Q3.1989 &lt;int&gt;, Q4.1989 &lt;int&gt;, Q1.1990 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1990 &lt;int&gt;, Q3.1990 &lt;int&gt;, Q4.1990 &lt;int&gt;, Q1.1991 &lt;int&gt;, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">segmented_landsat_data_whole_pixels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/segment_landsat_data.html">segment_landsat_data</a></span><span class="op">(</span></span>
 <span>  lter_file_path <span class="op">=</span> <span class="va">lter_file_path</span>,</span>
 <span>  kelp_segments_file_path <span class="op">=</span> <span class="va">kelp_segments_file_path</span>,</span>
 <span>  fractional_pixels <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -169,28 +169,28 @@ m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><m
 <span><span class="co">#&gt; 10 OR_21      -125.  42.8      NA       0       0      NA       0       0</span></span>
 <span><span class="co">#&gt; # ℹ 368,077 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 153 more variables: Q3.1985 &lt;dbl&gt;, Q4.1985 &lt;dbl&gt;, Q1.1986 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   Q2.1986 &lt;dbl&gt;, Q3.1986 &lt;dbl&gt;, Q4.1986 &lt;dbl&gt;, Q1.1987 &lt;dbl&gt;, Q2.1987 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   Q3.1987 &lt;dbl&gt;, Q4.1987 &lt;dbl&gt;, Q1.1988 &lt;dbl&gt;, Q2.1988 &lt;dbl&gt;, Q3.1988 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   Q4.1988 &lt;dbl&gt;, Q1.1989 &lt;dbl&gt;, Q2.1989 &lt;dbl&gt;, Q3.1989 &lt;dbl&gt;, Q4.1989 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   Q1.1990 &lt;dbl&gt;, Q2.1990 &lt;dbl&gt;, Q3.1990 &lt;dbl&gt;, Q4.1990 &lt;dbl&gt;, Q1.1991 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   Q2.1991 &lt;dbl&gt;, Q3.1991 &lt;dbl&gt;, Q4.1991 &lt;dbl&gt;, Q1.1992 &lt;dbl&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt; #   Q2.1986 &lt;dbl&gt;, Q3.1986 &lt;dbl&gt;, Q4.1986 &lt;dbl&gt;, Q1.1987 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1987 &lt;dbl&gt;, Q3.1987 &lt;dbl&gt;, Q4.1987 &lt;dbl&gt;, Q1.1988 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1988 &lt;dbl&gt;, Q3.1988 &lt;dbl&gt;, Q4.1988 &lt;dbl&gt;, Q1.1989 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1989 &lt;dbl&gt;, Q3.1989 &lt;dbl&gt;, Q4.1989 &lt;dbl&gt;, Q1.1990 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1990 &lt;dbl&gt;, Q3.1990 &lt;dbl&gt;, Q4.1990 &lt;dbl&gt;, Q1.1991 &lt;dbl&gt;, …</span></span></code></pre></div>
 <p>If a kelp segment never contains any pixels with kelp coverage, these
 segments are represented by a single row of <code>NA</code> values for
 the entire time series.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">segmented_landsat_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Segment_ID</span> <span class="op">==</span> <span class="st">"CA_103"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 162</span></span>
-<span><span class="co">#&gt;   Segment_ID   lon   lat Q1.1984 Q2.1984 Q3.1984 Q4.1984 Q1.1985 Q2.1985 Q3.1985</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 CA_103        NA    NA      NA      NA      NA      NA      NA      NA      NA</span></span>
-<span><span class="co">#&gt; # ℹ 152 more variables: Q4.1985 &lt;int&gt;, Q1.1986 &lt;int&gt;, Q2.1986 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q3.1986 &lt;int&gt;, Q4.1986 &lt;int&gt;, Q1.1987 &lt;int&gt;, Q2.1987 &lt;int&gt;, Q3.1987 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q4.1987 &lt;int&gt;, Q1.1988 &lt;int&gt;, Q2.1988 &lt;int&gt;, Q3.1988 &lt;int&gt;, Q4.1988 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q1.1989 &lt;int&gt;, Q2.1989 &lt;int&gt;, Q3.1989 &lt;int&gt;, Q4.1989 &lt;int&gt;, Q1.1990 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q2.1990 &lt;int&gt;, Q3.1990 &lt;int&gt;, Q4.1990 &lt;int&gt;, Q1.1991 &lt;int&gt;, Q2.1991 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q3.1991 &lt;int&gt;, Q4.1991 &lt;int&gt;, Q1.1992 &lt;int&gt;, Q2.1992 &lt;int&gt;, Q3.1992 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   Q4.1992 &lt;int&gt;, Q1.1993 &lt;int&gt;, Q2.1993 &lt;int&gt;, Q3.1993 &lt;int&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt;   Segment_ID   lon   lat Q1.1984 Q2.1984 Q3.1984 Q4.1984 Q1.1985 Q2.1985</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 CA_103        NA    NA      NA      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt; # ℹ 153 more variables: Q3.1985 &lt;int&gt;, Q4.1985 &lt;int&gt;, Q1.1986 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1986 &lt;int&gt;, Q3.1986 &lt;int&gt;, Q4.1986 &lt;int&gt;, Q1.1987 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1987 &lt;int&gt;, Q3.1987 &lt;int&gt;, Q4.1987 &lt;int&gt;, Q1.1988 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1988 &lt;int&gt;, Q3.1988 &lt;int&gt;, Q4.1988 &lt;int&gt;, Q1.1989 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1989 &lt;int&gt;, Q3.1989 &lt;int&gt;, Q4.1989 &lt;int&gt;, Q1.1990 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1990 &lt;int&gt;, Q3.1990 &lt;int&gt;, Q4.1990 &lt;int&gt;, Q1.1991 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   Q2.1991 &lt;int&gt;, Q3.1991 &lt;int&gt;, Q4.1991 &lt;int&gt;, Q1.1992 &lt;int&gt;, …</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="extracting-time-series">Extracting time series<a class="anchor" aria-label="anchor" href="#extracting-time-series"></a>
@@ -238,7 +238,7 @@ expressed as a percentage</li>
 <code>area_pct</code>: Kelp area relative to the maximum occupiable
 kelp area, expressed as a percentage</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quarterly_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  frequency <span class="op">=</span> <span class="st">"quarterly"</span></span>
@@ -279,7 +279,7 @@ Landsat pixels and for each year of the time series, it will select the
 maximum value that that pixel attained in that year. Then, these maximum
 values are added together for all pixels in each segment, so that the
 resulting time series is annual for each kelp segment.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">max_first_annual_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  annualization_method <span class="op">=</span> <span class="st">"max_first"</span></span>
@@ -287,25 +287,25 @@ resulting time series is annual for each kelp segment.</p>
 <span></span>
 <span><span class="va">max_first_annual_ts</span></span>
 <span><span class="co">#&gt; # A tibble: 14,400 × 8</span></span>
-<span><span class="co">#&gt;    Segment_ID max_occupiable historical_med  year date       area_abs area_hist</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 CA_1                0.800        0.00509  1984 1984-01-01 0.000543      10.7</span></span>
-<span><span class="co">#&gt;  2 CA_1                0.800        0.00509  1985 1985-01-01 0.00434       85.3</span></span>
-<span><span class="co">#&gt;  3 CA_1                0.800        0.00509  1986 1986-01-01 0.0850      1671. </span></span>
-<span><span class="co">#&gt;  4 CA_1                0.800        0.00509  1987 1987-01-01 0.0912      1793. </span></span>
-<span><span class="co">#&gt;  5 CA_1                0.800        0.00509  1988 1988-01-01 0              0  </span></span>
-<span><span class="co">#&gt;  6 CA_1                0.800        0.00509  1989 1989-01-01 0.0163       320. </span></span>
-<span><span class="co">#&gt;  7 CA_1                0.800        0.00509  1990 1990-01-01 0.0608      1195. </span></span>
-<span><span class="co">#&gt;  8 CA_1                0.800        0.00509  1991 1991-01-01 0.0145       286. </span></span>
-<span><span class="co">#&gt;  9 CA_1                0.800        0.00509  1992 1992-01-01 0.00619      122. </span></span>
-<span><span class="co">#&gt; 10 CA_1                0.800        0.00509  1993 1993-01-01 0              0  </span></span>
+<span><span class="co">#&gt;    Segment_ID max_occupiable historical_med  year date       area_abs</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 CA_1                0.800        0.00509  1984 1984-01-01 0.000543</span></span>
+<span><span class="co">#&gt;  2 CA_1                0.800        0.00509  1985 1985-01-01 0.00434 </span></span>
+<span><span class="co">#&gt;  3 CA_1                0.800        0.00509  1986 1986-01-01 0.0850  </span></span>
+<span><span class="co">#&gt;  4 CA_1                0.800        0.00509  1987 1987-01-01 0.0912  </span></span>
+<span><span class="co">#&gt;  5 CA_1                0.800        0.00509  1988 1988-01-01 0       </span></span>
+<span><span class="co">#&gt;  6 CA_1                0.800        0.00509  1989 1989-01-01 0.0163  </span></span>
+<span><span class="co">#&gt;  7 CA_1                0.800        0.00509  1990 1990-01-01 0.0608  </span></span>
+<span><span class="co">#&gt;  8 CA_1                0.800        0.00509  1991 1991-01-01 0.0145  </span></span>
+<span><span class="co">#&gt;  9 CA_1                0.800        0.00509  1992 1992-01-01 0.00619 </span></span>
+<span><span class="co">#&gt; 10 CA_1                0.800        0.00509  1993 1993-01-01 0       </span></span>
 <span><span class="co">#&gt; # ℹ 14,390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: area_pct &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 2 more variables: area_hist &lt;dbl&gt;, area_pct &lt;dbl&gt;</span></span></code></pre></div>
 <p>The <code>sum_first</code> method will sum the time series for all
 pixels in each kelp segment, so that each kelp segment has a quarterly
 time series. Then, the maximum for each segment within each year is
 selected, so that the time series is annual.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sum_first_annual_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  annualization_method <span class="op">=</span> <span class="st">"sum_first"</span></span>
@@ -313,24 +313,24 @@ selected, so that the time series is annual.</p>
 <span></span>
 <span><span class="va">sum_first_annual_ts</span></span>
 <span><span class="co">#&gt; # A tibble: 14,400 × 8</span></span>
-<span><span class="co">#&gt;    Segment_ID max_occupiable historical_med  year date       area_abs area_hist</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 CA_1                0.800        0.00419  1984 1984-01-01 0.000543      13.0</span></span>
-<span><span class="co">#&gt;  2 CA_1                0.800        0.00419  1985 1985-01-01 0.00300       71.5</span></span>
-<span><span class="co">#&gt;  3 CA_1                0.800        0.00419  1986 1986-01-01 0.0464      1107. </span></span>
-<span><span class="co">#&gt;  4 CA_1                0.800        0.00419  1987 1987-01-01 0.0805      1922. </span></span>
-<span><span class="co">#&gt;  5 CA_1                0.800        0.00419  1988 1988-01-01 0              0  </span></span>
-<span><span class="co">#&gt;  6 CA_1                0.800        0.00419  1989 1989-01-01 0.0138       329. </span></span>
-<span><span class="co">#&gt;  7 CA_1                0.800        0.00419  1990 1990-01-01 0.0476      1137. </span></span>
-<span><span class="co">#&gt;  8 CA_1                0.800        0.00419  1991 1991-01-01 0.00702      168. </span></span>
-<span><span class="co">#&gt;  9 CA_1                0.800        0.00419  1992 1992-01-01 0.00533      127. </span></span>
-<span><span class="co">#&gt; 10 CA_1                0.800        0.00419  1993 1993-01-01 0              0  </span></span>
+<span><span class="co">#&gt;    Segment_ID max_occupiable historical_med  year date       area_abs</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 CA_1                0.800        0.00419  1984 1984-01-01 0.000543</span></span>
+<span><span class="co">#&gt;  2 CA_1                0.800        0.00419  1985 1985-01-01 0.00300 </span></span>
+<span><span class="co">#&gt;  3 CA_1                0.800        0.00419  1986 1986-01-01 0.0464  </span></span>
+<span><span class="co">#&gt;  4 CA_1                0.800        0.00419  1987 1987-01-01 0.0805  </span></span>
+<span><span class="co">#&gt;  5 CA_1                0.800        0.00419  1988 1988-01-01 0       </span></span>
+<span><span class="co">#&gt;  6 CA_1                0.800        0.00419  1989 1989-01-01 0.0138  </span></span>
+<span><span class="co">#&gt;  7 CA_1                0.800        0.00419  1990 1990-01-01 0.0476  </span></span>
+<span><span class="co">#&gt;  8 CA_1                0.800        0.00419  1991 1991-01-01 0.00702 </span></span>
+<span><span class="co">#&gt;  9 CA_1                0.800        0.00419  1992 1992-01-01 0.00533 </span></span>
+<span><span class="co">#&gt; 10 CA_1                0.800        0.00419  1993 1993-01-01 0       </span></span>
 <span><span class="co">#&gt; # ℹ 14,390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: area_pct &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 2 more variables: area_hist &lt;dbl&gt;, area_pct &lt;dbl&gt;</span></span></code></pre></div>
 <p>Each of the <code>Q1</code>, <code>Q2</code>, <code>Q3</code>, and
 <code>Q4</code> options will sum together all pixels within each segment
 and extract its respective quarter within each year.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q3_annual_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  annualization_method <span class="op">=</span> <span class="st">"Q3"</span></span>
@@ -364,7 +364,7 @@ particular segment. Here, we’ve modified it and added more
 <code>ggplot2</code> line layers to visualize the difference between the
 <code>max_first</code>, <code>sum_first</code>, and <code>Q3</code>
 annualization methods.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># combine all methods into a single data frame for plotting</span></span>
 <span><span class="va">annual_ts</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
 <span>  <span class="va">max_first_annual_ts</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"Max first"</span><span class="op">)</span>,</span>
