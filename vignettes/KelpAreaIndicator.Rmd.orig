@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = ""
 )
-options(width = 80)
+options(width = 77)
 ```
 
 ## Data setup and prerequisites
@@ -50,7 +50,9 @@ segmented_landsat_data <- segment_landsat_data(
 )
 
 segmented_landsat_data
+```
 
+```{r segment_data_whole}
 segmented_landsat_data_whole_pixels <- segment_landsat_data(
   lter_file_path = lter_file_path,
   kelp_segments_file_path = kelp_segments_file_path,

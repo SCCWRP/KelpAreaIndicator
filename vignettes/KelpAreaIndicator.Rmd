@@ -69,12 +69,15 @@ segmented_landsat_data
 #> 10 OR_21      -125.  42.8      NA       0       0      NA       0       0
 #> # ℹ 368,077 more rows
 #> # ℹ 153 more variables: Q3.1985 <int>, Q4.1985 <int>, Q1.1986 <int>,
-#> #   Q2.1986 <int>, Q3.1986 <int>, Q4.1986 <int>, Q1.1987 <int>, Q2.1987 <int>,
-#> #   Q3.1987 <int>, Q4.1987 <int>, Q1.1988 <int>, Q2.1988 <int>, Q3.1988 <int>,
-#> #   Q4.1988 <int>, Q1.1989 <int>, Q2.1989 <int>, Q3.1989 <int>, Q4.1989 <int>,
-#> #   Q1.1990 <int>, Q2.1990 <int>, Q3.1990 <int>, Q4.1990 <int>, Q1.1991 <int>,
-#> #   Q2.1991 <int>, Q3.1991 <int>, Q4.1991 <int>, Q1.1992 <int>, …
+#> #   Q2.1986 <int>, Q3.1986 <int>, Q4.1986 <int>, Q1.1987 <int>,
+#> #   Q2.1987 <int>, Q3.1987 <int>, Q4.1987 <int>, Q1.1988 <int>,
+#> #   Q2.1988 <int>, Q3.1988 <int>, Q4.1988 <int>, Q1.1989 <int>,
+#> #   Q2.1989 <int>, Q3.1989 <int>, Q4.1989 <int>, Q1.1990 <int>,
+#> #   Q2.1990 <int>, Q3.1990 <int>, Q4.1990 <int>, Q1.1991 <int>, …
+```
 
+
+``` r
 segmented_landsat_data_whole_pixels <- segment_landsat_data(
   lter_file_path = lter_file_path,
   kelp_segments_file_path = kelp_segments_file_path,
@@ -105,11 +108,11 @@ segmented_landsat_data_whole_pixels
 #> 10 OR_21      -125.  42.8      NA       0       0      NA       0       0
 #> # ℹ 368,077 more rows
 #> # ℹ 153 more variables: Q3.1985 <dbl>, Q4.1985 <dbl>, Q1.1986 <dbl>,
-#> #   Q2.1986 <dbl>, Q3.1986 <dbl>, Q4.1986 <dbl>, Q1.1987 <dbl>, Q2.1987 <dbl>,
-#> #   Q3.1987 <dbl>, Q4.1987 <dbl>, Q1.1988 <dbl>, Q2.1988 <dbl>, Q3.1988 <dbl>,
-#> #   Q4.1988 <dbl>, Q1.1989 <dbl>, Q2.1989 <dbl>, Q3.1989 <dbl>, Q4.1989 <dbl>,
-#> #   Q1.1990 <dbl>, Q2.1990 <dbl>, Q3.1990 <dbl>, Q4.1990 <dbl>, Q1.1991 <dbl>,
-#> #   Q2.1991 <dbl>, Q3.1991 <dbl>, Q4.1991 <dbl>, Q1.1992 <dbl>, …
+#> #   Q2.1986 <dbl>, Q3.1986 <dbl>, Q4.1986 <dbl>, Q1.1987 <dbl>,
+#> #   Q2.1987 <dbl>, Q3.1987 <dbl>, Q4.1987 <dbl>, Q1.1988 <dbl>,
+#> #   Q2.1988 <dbl>, Q3.1988 <dbl>, Q4.1988 <dbl>, Q1.1989 <dbl>,
+#> #   Q2.1989 <dbl>, Q3.1989 <dbl>, Q4.1989 <dbl>, Q1.1990 <dbl>,
+#> #   Q2.1990 <dbl>, Q3.1990 <dbl>, Q4.1990 <dbl>, Q1.1991 <dbl>, …
 ```
 If a kelp segment never contains any pixels with kelp coverage, these segments are represented by a single row of `NA` values for the entire time series.
 
@@ -117,16 +120,16 @@ If a kelp segment never contains any pixels with kelp coverage, these segments a
 segmented_landsat_data |>
   dplyr::filter(Segment_ID == "CA_103")
 #> # A tibble: 1 × 162
-#>   Segment_ID   lon   lat Q1.1984 Q2.1984 Q3.1984 Q4.1984 Q1.1985 Q2.1985 Q3.1985
-#>   <chr>      <dbl> <dbl>   <int>   <int>   <int>   <int>   <int>   <int>   <int>
-#> 1 CA_103        NA    NA      NA      NA      NA      NA      NA      NA      NA
-#> # ℹ 152 more variables: Q4.1985 <int>, Q1.1986 <int>, Q2.1986 <int>,
-#> #   Q3.1986 <int>, Q4.1986 <int>, Q1.1987 <int>, Q2.1987 <int>, Q3.1987 <int>,
-#> #   Q4.1987 <int>, Q1.1988 <int>, Q2.1988 <int>, Q3.1988 <int>, Q4.1988 <int>,
-#> #   Q1.1989 <int>, Q2.1989 <int>, Q3.1989 <int>, Q4.1989 <int>, Q1.1990 <int>,
-#> #   Q2.1990 <int>, Q3.1990 <int>, Q4.1990 <int>, Q1.1991 <int>, Q2.1991 <int>,
-#> #   Q3.1991 <int>, Q4.1991 <int>, Q1.1992 <int>, Q2.1992 <int>, Q3.1992 <int>,
-#> #   Q4.1992 <int>, Q1.1993 <int>, Q2.1993 <int>, Q3.1993 <int>, …
+#>   Segment_ID   lon   lat Q1.1984 Q2.1984 Q3.1984 Q4.1984 Q1.1985 Q2.1985
+#>   <chr>      <dbl> <dbl>   <int>   <int>   <int>   <int>   <int>   <int>
+#> 1 CA_103        NA    NA      NA      NA      NA      NA      NA      NA
+#> # ℹ 153 more variables: Q3.1985 <int>, Q4.1985 <int>, Q1.1986 <int>,
+#> #   Q2.1986 <int>, Q3.1986 <int>, Q4.1986 <int>, Q1.1987 <int>,
+#> #   Q2.1987 <int>, Q3.1987 <int>, Q4.1987 <int>, Q1.1988 <int>,
+#> #   Q2.1988 <int>, Q3.1988 <int>, Q4.1988 <int>, Q1.1989 <int>,
+#> #   Q2.1989 <int>, Q3.1989 <int>, Q4.1989 <int>, Q1.1990 <int>,
+#> #   Q2.1990 <int>, Q3.1990 <int>, Q4.1990 <int>, Q1.1991 <int>,
+#> #   Q2.1991 <int>, Q3.1991 <int>, Q4.1991 <int>, Q1.1992 <int>, …
 ```
 
 ## Extracting time series
@@ -186,20 +189,20 @@ max_first_annual_ts <- extract_time_series(
 
 max_first_annual_ts
 #> # A tibble: 14,400 × 8
-#>    Segment_ID max_occupiable historical_med  year date       area_abs area_hist
-#>    <chr>               <dbl>          <dbl> <dbl> <date>        <dbl>     <dbl>
-#>  1 CA_1                0.800        0.00509  1984 1984-01-01 0.000543      10.7
-#>  2 CA_1                0.800        0.00509  1985 1985-01-01 0.00434       85.3
-#>  3 CA_1                0.800        0.00509  1986 1986-01-01 0.0850      1671. 
-#>  4 CA_1                0.800        0.00509  1987 1987-01-01 0.0912      1793. 
-#>  5 CA_1                0.800        0.00509  1988 1988-01-01 0              0  
-#>  6 CA_1                0.800        0.00509  1989 1989-01-01 0.0163       320. 
-#>  7 CA_1                0.800        0.00509  1990 1990-01-01 0.0608      1195. 
-#>  8 CA_1                0.800        0.00509  1991 1991-01-01 0.0145       286. 
-#>  9 CA_1                0.800        0.00509  1992 1992-01-01 0.00619      122. 
-#> 10 CA_1                0.800        0.00509  1993 1993-01-01 0              0  
+#>    Segment_ID max_occupiable historical_med  year date       area_abs
+#>    <chr>               <dbl>          <dbl> <dbl> <date>        <dbl>
+#>  1 CA_1                0.800        0.00509  1984 1984-01-01 0.000543
+#>  2 CA_1                0.800        0.00509  1985 1985-01-01 0.00434 
+#>  3 CA_1                0.800        0.00509  1986 1986-01-01 0.0850  
+#>  4 CA_1                0.800        0.00509  1987 1987-01-01 0.0912  
+#>  5 CA_1                0.800        0.00509  1988 1988-01-01 0       
+#>  6 CA_1                0.800        0.00509  1989 1989-01-01 0.0163  
+#>  7 CA_1                0.800        0.00509  1990 1990-01-01 0.0608  
+#>  8 CA_1                0.800        0.00509  1991 1991-01-01 0.0145  
+#>  9 CA_1                0.800        0.00509  1992 1992-01-01 0.00619 
+#> 10 CA_1                0.800        0.00509  1993 1993-01-01 0       
 #> # ℹ 14,390 more rows
-#> # ℹ 1 more variable: area_pct <dbl>
+#> # ℹ 2 more variables: area_hist <dbl>, area_pct <dbl>
 ```
 
 The `sum_first` method will sum the time series for all pixels in each kelp segment, so that each kelp segment has a quarterly time series. Then, the maximum for each segment within each year is selected, so that the time series is annual.
@@ -213,20 +216,20 @@ sum_first_annual_ts <- extract_time_series(
 
 sum_first_annual_ts
 #> # A tibble: 14,400 × 8
-#>    Segment_ID max_occupiable historical_med  year date       area_abs area_hist
-#>    <chr>               <dbl>          <dbl> <dbl> <date>        <dbl>     <dbl>
-#>  1 CA_1                0.800        0.00419  1984 1984-01-01 0.000543      13.0
-#>  2 CA_1                0.800        0.00419  1985 1985-01-01 0.00300       71.5
-#>  3 CA_1                0.800        0.00419  1986 1986-01-01 0.0464      1107. 
-#>  4 CA_1                0.800        0.00419  1987 1987-01-01 0.0805      1922. 
-#>  5 CA_1                0.800        0.00419  1988 1988-01-01 0              0  
-#>  6 CA_1                0.800        0.00419  1989 1989-01-01 0.0138       329. 
-#>  7 CA_1                0.800        0.00419  1990 1990-01-01 0.0476      1137. 
-#>  8 CA_1                0.800        0.00419  1991 1991-01-01 0.00702      168. 
-#>  9 CA_1                0.800        0.00419  1992 1992-01-01 0.00533      127. 
-#> 10 CA_1                0.800        0.00419  1993 1993-01-01 0              0  
+#>    Segment_ID max_occupiable historical_med  year date       area_abs
+#>    <chr>               <dbl>          <dbl> <dbl> <date>        <dbl>
+#>  1 CA_1                0.800        0.00419  1984 1984-01-01 0.000543
+#>  2 CA_1                0.800        0.00419  1985 1985-01-01 0.00300 
+#>  3 CA_1                0.800        0.00419  1986 1986-01-01 0.0464  
+#>  4 CA_1                0.800        0.00419  1987 1987-01-01 0.0805  
+#>  5 CA_1                0.800        0.00419  1988 1988-01-01 0       
+#>  6 CA_1                0.800        0.00419  1989 1989-01-01 0.0138  
+#>  7 CA_1                0.800        0.00419  1990 1990-01-01 0.0476  
+#>  8 CA_1                0.800        0.00419  1991 1991-01-01 0.00702 
+#>  9 CA_1                0.800        0.00419  1992 1992-01-01 0.00533 
+#> 10 CA_1                0.800        0.00419  1993 1993-01-01 0       
 #> # ℹ 14,390 more rows
-#> # ℹ 1 more variable: area_pct <dbl>
+#> # ℹ 2 more variables: area_hist <dbl>, area_pct <dbl>
 ```
 
 Each of the `Q1`, `Q2`, `Q3`, and `Q4` options will sum together all pixels within each segment and extract its respective quarter within each year.
