@@ -49,7 +49,7 @@ get_kelp_presence <- function(
     dplyr::group_by(Segment_ID) |>
     dplyr::summarize(num_pixels = sum(is_present))
 
-  kelp_segments <- sf::st_read(kelp_segments_file_path)
+  kelp_segments <- sf::st_read(kelp_segments_file_path, quiet = TRUE)
 
   # calculate the area of each polygon, convert to km2
   kelp_presence <- kelp_segments |>
