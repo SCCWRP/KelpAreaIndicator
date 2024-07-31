@@ -22,8 +22,8 @@ Install the `KelpAreaIndicator` package from the SCCWRP github repository and lo
 
 ```{r load_package}
 # devtools::install_github(
-#   "SCCWRP/KelpAreaIndicator", 
-#   build_vignettes = TRUE, 
+#   "SCCWRP/KelpAreaIndicator",
+#   build_vignettes = TRUE,
 #   build_manual = TRUE
 # )
 library(KelpAreaIndicator)
@@ -132,7 +132,7 @@ q3_annual_ts
 
 ## Plotting time series
 Compare different methods of annualization applied to the `CA_78` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. Here, we've modified it and added more `ggplot2` line layers to visualize the difference between the `max_first`, `sum_first`, and `Q3` annualization methods.
-```{r time_series_plot_comparison, fig.dpi=300, fig.height = 4.5, fig.width = 8, out.height="400px", out.width="95%", fig.align='center'}
+```{r time_series_plot_comparison, fig.dpi=300, fig.height = 4, fig.width = 7.11, out.height="400px", out.width="95%", fig.align='center'}
 # combine all methods into a single data frame for plotting
 annual_ts <- dplyr::bind_rows(
   max_first_annual_ts |> dplyr::mutate(method = "Max first"),
