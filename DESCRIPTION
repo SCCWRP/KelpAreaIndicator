@@ -19,4 +19,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://sccwrp.github.io/KelpAreaIndicator/
+URL: https://sccwrp.github.io/KelpAreaIndicator/, https://github.com/SCCWRP/KelpAreaIndicator
