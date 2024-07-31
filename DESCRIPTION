@@ -1,9 +1,11 @@
 Package: KelpAreaIndicator
 Title: Explore Landsat Kelp Area Data
 Version: 0.0.0.9000
-Authors@R: 
-    person("Nicholas", "Lombardo", , "nicholasl@sccwrp.org", role = c("aut", "cre"))
-Description: A package to explore the Landsat kelp area data along the west coast of the US.
+Authors@R: c(
+        person("Nicholas", "Lombardo", , "nicholasl@sccwrp.org", role = c("aut", "cre")),
+        person("SCCWRP", role = c("cph", "fnd"))
+    )
+Description: Explore the Landsat kelp area data along the west coast of the US.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
