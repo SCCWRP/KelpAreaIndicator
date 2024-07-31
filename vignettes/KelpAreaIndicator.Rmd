@@ -15,7 +15,7 @@ Install the `KelpAreaIndicator` package from the SCCWRP github repository and lo
 
 
 ``` r
-# devtools::install_github("SCCWRP/KelpAreaIndicator")
+# devtools::install_github("SCCWRP/KelpAreaIndicator", build_vignettes = TRUE, build_manual = TRUE)
 library(KelpAreaIndicator)
 ```
 
@@ -170,7 +170,7 @@ quarterly_ts
 ### Annual time series
 We provide several options for annualizing the quarterly Landsat area data, `max_first`, `sum_first`, or extracting a specific quarter for each year, discussed below. The annualized time series data frame is identical to the quarterly time series data, except there is no `quarter` column.
 
-Note that the historical median area (`historical_med`) and maximum occupiable area (`max_occupiable`) are given per `Segment_ID`, repeated for every row of its time series. The historical median is calculated across the *annualized* values from 1984 to 2013, inclusive. 
+Note that the historical median area (`historical_med`) and maximum occupiable area (`max_occupiable`) are given per `Segment_ID`, repeated for every row of its time series. The historical median is calculated across the *annualized* values from 1984 to 2013, inclusive.
 
 The `max_first` annualization method will loop through all Landsat pixels and for each year of the time series, it will select the maximum value that that pixel attained in that year. Then, these maximum values are added together for all pixels in each segment, so that the resulting time series is annual for each kelp segment.
 
@@ -258,32 +258,32 @@ Compare different methods of annualization applied to the `CA_78` segment below.
 ``` r
 # combine all methods into a single data frame for plotting
 annual_ts <- dplyr::bind_rows(
-  max_first_annual_ts |> dplyr::mutate(method = "Max first"), 
+  max_first_annual_ts |> dplyr::mutate(method = "Max first"),
   sum_first_annual_ts |> dplyr::mutate(method = "Sum first"),
   q3_annual_ts |> dplyr::mutate(method = "Quarter 3")
 )
 
 # for grey background lines in plot
-other_ts <- annual_ts |> 
+other_ts <- annual_ts |>
   dplyr::filter(Segment_ID == "CA_78") |>
   dplyr::rename(others = method)
 
 plot_time_series(
-  kelp_area_time_series = annual_ts, 
-  type = "absolute", 
+  kelp_area_time_series = annual_ts,
+  type = "absolute",
   segment_id = "CA_78",
   color = method
 ) +
   ggplot2::geom_line(
-    data = other_ts, 
-    mapping = ggplot2::aes(x = date, y = area_abs, group = others), 
+    data = other_ts,
+    mapping = ggplot2::aes(x = date, y = area_abs, group = others),
     alpha = 0.15,
     inherit.aes = FALSE
   ) +
   ggplot2::scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
   ggplot2::scale_color_viridis_d() +
   ggplot2::labs(color = "Annualization\nMethod") +
-  ggplot2::facet_wrap(ggplot2::vars(method), scales = "free_x") 
+  ggplot2::facet_wrap(ggplot2::vars(method), scales = "free_x")
 #> Scale for x is already present.
 #> Adding another scale for x, which will replace the existing scale.
 ```
