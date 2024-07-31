@@ -9,7 +9,7 @@ get_kelp_presence(
   kelp_segments_file_path,
   ...,
   no_kelp_bound = 0.02,
-  ephemeral_kelp_bound = 0.05
+  ephemeral_kelp_bound = 0.15
 )
 }
 \arguments{
@@ -25,7 +25,7 @@ landsat data, with the assigned segment from a given shapefile}
 category. Default is 0.02}
 
 \item{ephemeral_kelp_bound}{Upper bound, in percentage of segment area, for the "Ephemeral
-Kelp" category. Default is 0.05}
+Kelp" category. Default is 0.15}
 }
 \value{
 A dataframe with the following columns:
