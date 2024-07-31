@@ -21,7 +21,11 @@ options(width = 80)
 Install the `KelpAreaIndicator` package from the SCCWRP github repository and load it.
 
 ```{r load_package}
-# devtools::install_github("SCCWRP/KelpAreaIndicator", build_vignettes = TRUE, build_manual = TRUE)
+# devtools::install_github(
+#   "SCCWRP/KelpAreaIndicator", 
+#   build_vignettes = TRUE, 
+#   build_manual = TRUE
+# )
 library(KelpAreaIndicator)
 ```
 
