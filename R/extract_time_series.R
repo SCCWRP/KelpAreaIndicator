@@ -107,7 +107,6 @@ extract_annual_time_series <- function(segmented_landsat_data, annualization_met
     sort()
 
   if (annualization_method == "max_first") {
-    # slower than a tidyverse solution, but conserves RAM
     annual_time_series <- do.call(cbind, lapply(years, function(y) {
       # for each year y in the years vector, select only the columns
       # for the current year
@@ -115,12 +114,7 @@ extract_annual_time_series <- function(segmented_landsat_data, annualization_met
         dplyr::select(dplyr::ends_with(as.character(y)))
 
       # calculate maxima by row, i.e. max per year for each pixel
-      apply(current_year_data, 1, function(x) {
-        # if all NA in a year, returns -Inf, so replace with NA
-        out <- suppressWarnings(max(x, na.rm = TRUE))
-        out[is.infinite(out)] <- NA
-        out
-      })
+      do.call(function(...) pmax(..., na.rm = TRUE), current_year_data)
     })) |>
       as.data.frame()
 

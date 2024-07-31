@@ -18,19 +18,18 @@ get_max_occupiable_kelp_area <- function(segmented_landsat_data) {
   max_occupiable_kelp_area <- data.frame(Segment_ID = segmented_landsat_data$Segment_ID)
 
   # for the entire time series for each pixel, get the maximum area
-  max_occupiable_kelp_area$max_occupiable <- segmented_landsat_data |>
-    dplyr::select(-c(Segment_ID, lon, lat)) |>
-    apply(1, function(x) {
-      # if all NA in a year, returns -Inf, so replace with NA
-      out <- suppressWarnings(max(x, na.rm = TRUE)) / 1e6 # in km2
-      out[is.infinite(out)] <- NA
-      out
-    })
+  max_occupiable_tmp <- segmented_landsat_data |>
+    dplyr::select(-c(Segment_ID, lon, lat))
+
+  max_occupiable_kelp_area$max_occupiable <- do.call(
+    function(...) pmax(..., na.rm = TRUE),
+    max_occupiable_tmp
+  )
 
   # sum together all the maximum areas in each segment
   max_occupiable_kelp_area <- max_occupiable_kelp_area |>
     dplyr::group_by(Segment_ID) |>
-    dplyr::summarize(max_occupiable = sum(max_occupiable, na.rm = TRUE))
+    dplyr::summarize(max_occupiable = sum(max_occupiable, na.rm = TRUE) / 1e6)
 
   max_occupiable_kelp_area
 }
