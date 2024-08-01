@@ -17,7 +17,7 @@ extract_time_series(
 with rows for each pixel, and columns for each quarter and year of the
 landsat data, with the assigned segment from a given shapefile}
 
-\item{...}{unused}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{frequency}{The frequency of the time series to extract. Either "annual" (default) or "quarterly"}
 

@@ -19,7 +19,7 @@ landsat data, with the assigned segment from a given shapefile}
 
 \item{kelp_segments_file_path}{Character string path to the kelp segments shapefile}
 
-\item{...}{unused}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{no_kelp_bound}{Upper bound, in percent of segment area, for the "No Historical Kelp"
 category. Default is 0.02}

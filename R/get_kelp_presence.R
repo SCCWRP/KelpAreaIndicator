@@ -9,7 +9,7 @@
 #' with rows for each pixel, and columns for each quarter and year of the
 #' landsat data, with the assigned segment from a given shapefile
 #' @param kelp_segments_file_path Character string path to the kelp segments shapefile
-#' @param ... unused
+#' @inheritParams rlang::args_dots_empty
 #' @param no_kelp_bound Upper bound, in percent of segment area, for the "No Historical Kelp"
 #' category. Default is 0.02
 #' @param ephemeral_kelp_bound Upper bound, in percentage of segment area, for the "Ephemeral
@@ -34,6 +34,7 @@ get_kelp_presence <- function(
     no_kelp_bound = 0.02,
     ephemeral_kelp_bound = 0.15) {
 
+  rlang::check_dots_empty()
   kelp_presence <- data.frame(Segment_ID = segmented_landsat_data$Segment_ID)
 
   # indicate whether a pixel has ever had any kelp area detected across the
