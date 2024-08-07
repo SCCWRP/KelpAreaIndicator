@@ -193,6 +193,82 @@ the entire time series.</p>
 <span><span class="co">#&gt; #   Q2.1991 &lt;int&gt;, Q3.1991 &lt;int&gt;, Q4.1991 &lt;int&gt;, Q1.1992 &lt;int&gt;, …</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="kelp-presence">Kelp presence<a class="anchor" aria-label="anchor" href="#kelp-presence"></a>
+</h2>
+<p>Some of the designated kelp segments may have limited data points in
+the Landsat kelp area data, so it is useful to classify the presence of
+kelp within each kelp segment. We provide the
+<code><a href="../reference/get_kelp_presence.html">get_kelp_presence()</a></code> function to do this. The current
+categories are “No Historical Kelp”, “Ephemeral Kelp”, and “Kelp”,
+defined by the <code>no_kelp_bound</code> and
+<code>ephemeral_kelp_bound</code> arguments, discussed below.</p>
+<p>This function will first calculate the percentage of area of each
+kelp segment that kelp has ever been detected in. That is, distinct
+pixels that have ever had kelp area greater than 0 within a segment are
+tallied, then this number of pixels is multiplied by 900
+m<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>2</mn></msup><annotation encoding="application/x-tex">^2</annotation></semantics></math>
+(the maximum possible area per 30 m
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>×</mo><annotation encoding="application/x-tex">\times</annotation></semantics></math>
+30 m pixel), converted to
+km<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>2</mn></msup><annotation encoding="application/x-tex">^2</annotation></semantics></math>,
+and then divided by the kelp segment’s area in
+km<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi></mi><mn>2</mn></msup><annotation encoding="application/x-tex">^2</annotation></semantics></math>.
+This final ratio is multiplied by 100 to express it as a percentage.</p>
+<p>After the above percentage is calculated, the function will
+categorize each kelp segment according to the bounds set with the
+<code>no_kelp_bound</code> and <code>ephemeral_kelp_bound</code>
+arguments. These are both upper bounds for their respective categories,
+so for example, if <code>no_kelp_bound = 0.02</code>, then kelp segments
+with a kelp presence percentage of 0.01% will be categorized as “No
+Historical Kelp”; similarly for “Ephemeral Kelp”. The defaults for these
+arguments are <code>no_kelp_bound = 0.02</code> and
+<code>ephemeral_kelp_bound = 0.15</code>.</p>
+<p>The result of the function is a data frame with the following
+columns:</p>
+<ul>
+<li><p><code>Segment_ID</code>: The ID of the kelp area segment</p></li>
+<li><p><code>segment_area</code>: The area of the kelp segment in
+km2</p></li>
+<li><p><code>pixel_percent</code>: The percentage of the kelp segment’s
+area that the total number of pixels ever detected occupy. This
+calculation assumes each pixel contains the full 900 m2 of kelp
+area</p></li>
+<li>
+<p><code>presence</code>: The category of kelp presence for each
+segment.</p>
+<ul>
+<li>“No Historical Kelp”: pixel_percent &lt;= no_kelp_bound OR
+pixel_percent is NA</li>
+<li>“Ephemeral Kelp”: pixel_percent &lt;= ephemeral_kelp_bound</li>
+<li>“Kelp”: otherwise</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">kelp_presence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kelp_presence.html">get_kelp_presence</a></span><span class="op">(</span></span>
+<span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
+<span>  kelp_segments_file_path <span class="op">=</span> <span class="va">kelp_segments_file_path</span>,</span>
+<span>  no_kelp_bound <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>  ephemeral_kelp_bound <span class="op">=</span> <span class="fl">0.15</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kelp_presence</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">Segment_ID</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 360 × 4</span></span>
+<span><span class="co">#&gt;    Segment_ID segment_area pixel_percent presence          </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;             </span></span>
+<span><span class="co">#&gt;  1 CA_1               71.8       3.93    Kelp              </span></span>
+<span><span class="co">#&gt;  2 CA_10              54.8       2.24    Kelp              </span></span>
+<span><span class="co">#&gt;  3 CA_100             44.6       0.0887  Ephemeral Kelp    </span></span>
+<span><span class="co">#&gt;  4 CA_101             72.7       0.00619 No Historical Kelp</span></span>
+<span><span class="co">#&gt;  5 CA_102             16.3       0.00554 No Historical Kelp</span></span>
+<span><span class="co">#&gt;  6 CA_103            102.       NA       No Historical Kelp</span></span>
+<span><span class="co">#&gt;  7 CA_104             41.6      NA       No Historical Kelp</span></span>
+<span><span class="co">#&gt;  8 CA_105            111.        0.00728 No Historical Kelp</span></span>
+<span><span class="co">#&gt;  9 CA_106             69.2      NA       No Historical Kelp</span></span>
+<span><span class="co">#&gt; 10 CA_107             42.5      NA       No Historical Kelp</span></span>
+<span><span class="co">#&gt; # ℹ 350 more rows</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="extracting-time-series">Extracting time series<a class="anchor" aria-label="anchor" href="#extracting-time-series"></a>
 </h2>
 <p>The quarterly Landsat time series is extracted with the
@@ -238,7 +314,7 @@ expressed as a percentage</li>
 <code>area_pct</code>: Kelp area relative to the maximum occupiable
 kelp area, expressed as a percentage</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quarterly_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  frequency <span class="op">=</span> <span class="st">"quarterly"</span></span>
@@ -279,7 +355,7 @@ Landsat pixels and for each year of the time series, it will select the
 maximum value that that pixel attained in that year. Then, these maximum
 values are added together for all pixels in each segment, so that the
 resulting time series is annual for each kelp segment.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">max_first_annual_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  annualization_method <span class="op">=</span> <span class="st">"max_first"</span></span>
@@ -305,7 +381,7 @@ resulting time series is annual for each kelp segment.</p>
 pixels in each kelp segment, so that each kelp segment has a quarterly
 time series. Then, the maximum for each segment within each year is
 selected, so that the time series is annual.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sum_first_annual_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  annualization_method <span class="op">=</span> <span class="st">"sum_first"</span></span>
@@ -330,7 +406,7 @@ selected, so that the time series is annual.</p>
 <p>Each of the <code>Q1</code>, <code>Q2</code>, <code>Q3</code>, and
 <code>Q4</code> options will sum together all pixels within each segment
 and extract its respective quarter within each year.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">q3_annual_ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_time_series.html">extract_time_series</a></span><span class="op">(</span></span>
 <span>  segmented_landsat_data <span class="op">=</span> <span class="va">segmented_landsat_data</span>,</span>
 <span>  annualization_method <span class="op">=</span> <span class="st">"Q3"</span></span>
@@ -364,7 +440,7 @@ particular segment. Here, we’ve modified it and added more
 <code>ggplot2</code> line layers to visualize the difference between the
 <code>max_first</code>, <code>sum_first</code>, and <code>Q3</code>
 annualization methods.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># combine all methods into a single data frame for plotting</span></span>
 <span><span class="va">annual_ts</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
 <span>  <span class="va">max_first_annual_ts</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"Max first"</span><span class="op">)</span>,</span>
@@ -400,6 +476,59 @@ annualization methods.</p>
 plot of chunk time_series_plot_comparison
 </p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="kelp-status">Kelp status<a class="anchor" aria-label="anchor" href="#kelp-status"></a>
+</h2>
+<p>The status of kelp segments can be computed for years after the
+historical baseline (1984 - 2013) with the
+<code><a href="../reference/get_kelp_status.html">get_kelp_status()</a></code> function. This function uses the computed
+time series and kelp presence data frames from the
+<code><a href="../reference/extract_time_series.html">extract_time_series()</a></code> and <code><a href="../reference/get_kelp_presence.html">get_kelp_presence()</a></code>
+functions, respectively. Individual kelp segments or subsets of kelp
+segments may be specified with the <code>segment_id</code> argument, and
+the desired year may be specified with the <code>status_year</code>
+argument. The function will return the status for all segments if
+<code>segment_id = NULL</code> (default) or for the latest year in the
+Landsat data if <code>status_year = NULL</code> (default).</p>
+<p>Status is calculated by dividing the given year’s kelp area by the
+historical median across 1984-2013 for each kelp segment. A value of
+-999 indicates that there is not enough data to determine a status for
+the given kelp segment.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">kelp_status_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kelp_status.html">get_kelp_status</a></span><span class="op">(</span></span>
+<span>  annual_time_series <span class="op">=</span> <span class="va">sum_first_annual_ts</span>,</span>
+<span>  kelp_presence <span class="op">=</span> <span class="va">kelp_presence</span>,</span>
+<span>  status_year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kelp_status_2020</span></span>
+<span><span class="co">#&gt; # A tibble: 360 × 3</span></span>
+<span><span class="co">#&gt;    Segment_ID  year  status</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 CA_1        2020   92.5 </span></span>
+<span><span class="co">#&gt;  2 CA_10       2020    1.06</span></span>
+<span><span class="co">#&gt;  3 CA_100      2020 -999   </span></span>
+<span><span class="co">#&gt;  4 CA_101      2020 -999   </span></span>
+<span><span class="co">#&gt;  5 CA_102      2020 -999   </span></span>
+<span><span class="co">#&gt;  6 CA_103      2020 -999   </span></span>
+<span><span class="co">#&gt;  7 CA_104      2020 -999   </span></span>
+<span><span class="co">#&gt;  8 CA_105      2020 -999   </span></span>
+<span><span class="co">#&gt;  9 CA_106      2020 -999   </span></span>
+<span><span class="co">#&gt; 10 CA_107      2020 -999   </span></span>
+<span><span class="co">#&gt; # ℹ 350 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">kelp_status_CA_78</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_kelp_status.html">get_kelp_status</a></span><span class="op">(</span></span>
+<span>  annual_time_series <span class="op">=</span> <span class="va">sum_first_annual_ts</span>,</span>
+<span>  kelp_presence <span class="op">=</span> <span class="va">kelp_presence</span>,</span>
+<span>  segment_id <span class="op">=</span> <span class="st">"CA_78"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kelp_status_CA_78</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span><span class="co">#&gt;   Segment_ID  year status</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 CA_78       2023   2.57</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
