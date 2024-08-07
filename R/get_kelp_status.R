@@ -51,10 +51,11 @@ get_kelp_status <- function(
       status = area_abs[year == status_year] / historical_med[year == status_year] * 100
     ) |>
     dplyr::mutate(
+      year = status_year,
       status = ifelse(presence != 'Kelp', -999, status)
     ) |>
     dplyr::ungroup() |>
-    dplyr::select(-c(presence, historical_med))
+    dplyr::select(Segment_ID, year, status)
 
   kelp_status
 }
