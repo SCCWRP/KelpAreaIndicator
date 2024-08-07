@@ -8,7 +8,7 @@
 #'
 #' @param lter_file_path character string path to the landsat netCDF file
 #' @param kelp_segments_file_path character string path to the kelp segments shapefile
-#' @param ... unused
+#' @inheritParams rlang::args_dots_empty
 #' @param fractional_pixels whether to consider fractional area values of pixels, e.g.
 #' if a pixel in the Landsat data has a value of 66 m^2, setting `fractional_pixels = FALSE`
 #' will treat the pixel as 900 m^2 instead
@@ -27,6 +27,9 @@ segment_landsat_data <- function(
     kelp_segments_file_path,
     ...,
     fractional_pixels = TRUE) {
+
+  rlang::check_dots_empty()
+
   nc_file <- ncdf4::nc_open(lter_file_path)
 
   #lon, lat, area, year from netCDF file, as matrices
