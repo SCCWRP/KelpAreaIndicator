@@ -20,8 +20,7 @@ Does not work with quarterly time series}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{status_year}{Year to calculate the status for, or \code{NULL} for the latest year in the time series.
-Must be later than 2013}
+\item{status_year}{Year to calculate the status for, or \code{NULL} for the latest year in the time series.}
 
 \item{segment_id}{A character vector containing the subset of \code{segment_id}'s of interest, e.g.
 \code{c("CA_71", "CA_78")}, or \code{NULL} for all segment IDs (default).}

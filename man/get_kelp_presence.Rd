@@ -17,7 +17,8 @@ get_kelp_presence(
 with rows for each pixel, and columns for each quarter and year of the
 landsat data, with the assigned segment from a given shapefile}
 
-\item{kelp_segments_file_path}{Character string path to the kelp segments shapefile}
+\item{kelp_segments_file_path}{character string path to the kelp segments shapefile. Must contain
+a Segment_ID attribute and use the WGS 84 coordinate reference system (EPSG:4326)}
 
 \item{...}{These dots are for future extensions and must be empty.}
 

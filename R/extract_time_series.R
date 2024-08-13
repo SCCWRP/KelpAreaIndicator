@@ -28,8 +28,8 @@
 #'  * `max_occupiable`: The maximum occupiable kelp area for the given segment. This column repeats
 #'  the same value for all rows in a single kelp area segment
 #'  * `historical_med`: The historical (1984-2013) median kelp area for the segment. The median is
-#'  computed across the annualized kelp area values. This column repeats the same value for all rows
-#'  in a single kelp area segment
+#'  computed across the quarterly or annualized kelp area values, depending on `frequency`. This column
+#'  repeats the same value for all rows in a single kelp area segment
 #'  * `quarter`*: If `frequency == "quarterly"`, the quarter in the time series, otherwise not present
 #'  * `year`: Year in the time series
 #'  * `date`: date representation of the year/quarter, for simpler plotting

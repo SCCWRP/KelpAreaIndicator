@@ -23,7 +23,7 @@ Install the `KelpAreaIndicator` package from the SCCWRP github repository and lo
 library(KelpAreaIndicator)
 ```
 
-Provide the file paths to the Landsat kelp area data, downloaded from the [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=74), and the shapefile that defines the kelp segment polygons of interest. The kelp segments shapefile is a polygon shapefile with at least one attribute, `Segment_ID`, that defines the kelp area segments of interest.
+Provide the file paths to the Landsat kelp area data, downloaded from the [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=74), and the shapefile that defines the kelp segment polygons of interest. The kelp segments shapefile is a polygon shapefile with at least one attribute, `Segment_ID`, that defines the kelp area segments of interest with the WGS 84 CRS (EPSG:4326).
 
 
 ``` r
@@ -136,7 +136,7 @@ segmented_landsat_data |>
 
 Some of the designated kelp segments may have limited data points in the Landsat kelp area data, so it is useful to classify the presence of kelp within each kelp segment. We provide the `get_kelp_presence()` function to do this. The current categories are "No Historical Kelp", "Ephemeral Kelp", and "Kelp", defined by the `no_kelp_bound` and `ephemeral_kelp_bound` arguments, discussed below.
 
-This function will first calculate the percentage of area of each kelp segment that kelp has ever been detected in. That is, distinct pixels that have ever had kelp area greater than 0 within a segment are tallied, then this number of pixels is multiplied by 900 m$^2$ (the maximum possible area per 30 m $\times$ 30 m pixel), converted to km$^2$, and then divided by the kelp segment's area in km$^2$. This final ratio is multiplied by 100 to express it as a percentage. 
+This function will first calculate the percentage of area of each kelp segment that kelp has ever been detected in. That is, distinct pixels that have ever had kelp area greater than 0 within a segment are tallied, then this number of pixels is multiplied by 900 m$^2$ (the maximum possible area per 30 m $\times$ 30 m pixel), converted to km$^2$, and then divided by the kelp segment's area in km$^2$. This final ratio is multiplied by 100 to express it as a percentage.
 
 After the above percentage is calculated, the function will categorize each kelp segment according to the bounds set with the `no_kelp_bound` and `ephemeral_kelp_bound` arguments. These are both upper bounds for their respective categories, so for example, if `no_kelp_bound = 0.02`, then kelp segments with a kelp presence percentage of 0.01% will be categorized as "No Historical Kelp"; similarly for "Ephemeral Kelp". The defaults for these arguments are `no_kelp_bound = 0.02` and `ephemeral_kelp_bound = 0.15`.
 
@@ -185,7 +185,7 @@ The quarterly time series is aggregated by summing the quarterly area data for a
 
 * `Segment_ID`: The ID of the kelp area segment
 * `max_occupiable`: The maximum occupiable kelp area for the given segment. This column repeats the same value for all rows in a single kelp area segment
-* `historical_med`: The historical (1984-2013) median kelp area for the segment. The median is computed across the annualized kelp area values. This column repeats the same value for all rows in a single kelp area segment
+* `historical_med`: The historical (1984-2013) median kelp area for the segment. The median is computed across the quarterly or annualized kelp area values, depending on `frequency`. This column repeats the same value for all rows in a single kelp area segment
 * `quarter`: The quarter in the time series. Not present in the annual time series
 * `year`: Year in the time series
 * `date`: Date representation of the year/quarter, for simpler plotting
@@ -347,7 +347,7 @@ plot_time_series(
 
 
 ## Kelp status
-The status of kelp segments can be computed for years after the historical baseline (1984 - 2013) with the `get_kelp_status()` function. This function uses the computed time series and kelp presence data frames from the `extract_time_series()` and `get_kelp_presence()` functions, respectively. Individual kelp segments or subsets of kelp segments may be specified with the `segment_id` argument, and the desired year may be specified with the `status_year` argument. The function will return the status for all segments if `segment_id = NULL` (default) or for the latest year in the Landsat data if `status_year = NULL` (default). 
+The status of kelp segments can be computed relative to the historical baseline (1984 - 2013) with the `get_kelp_status()` function. This function uses the computed time series and kelp presence data frames from the `extract_time_series()` and `get_kelp_presence()` functions, respectively. Individual kelp segments or subsets of kelp segments may be specified with the `segment_id` argument, and the desired year may be specified with the `status_year` argument. The function will return the status for all segments if `segment_id = NULL` (default) or for the latest year in the Landsat data if `status_year = NULL` (default).
 
 Status is calculated by dividing the given year's kelp area by the historical median across 1984-2013 for each kelp segment. A value of -999 indicates that there is not enough data to determine a status for the given kelp segment.
 

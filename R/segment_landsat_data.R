@@ -7,7 +7,8 @@
 #' This function assumes that the Landsat data starts with quarter 1 of the first year of interest.
 #'
 #' @param lter_file_path character string path to the landsat netCDF file
-#' @param kelp_segments_file_path character string path to the kelp segments shapefile
+#' @param kelp_segments_file_path character string path to the kelp segments shapefile. Must contain
+#' a Segment_ID attribute and use the WGS 84 coordinate reference system (EPSG:4326)
 #' @inheritParams rlang::args_dots_empty
 #' @param fractional_pixels whether to consider fractional area values of pixels, e.g.
 #' if a pixel in the Landsat data has a value of 66 m^2, setting `fractional_pixels = FALSE`
