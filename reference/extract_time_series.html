@@ -96,8 +96,8 @@ then all these maximum areas per year are summed together within each kelp segme
 <li><p><code>max_occupiable</code>: The maximum occupiable kelp area for the given segment. This column repeats
 the same value for all rows in a single kelp area segment</p></li>
 <li><p><code>historical_med</code>: The historical (1984-2013) median kelp area for the segment. The median is
-computed across the annualized kelp area values. This column repeats the same value for all rows
-in a single kelp area segment</p></li>
+computed across the quarterly or annualized kelp area values, depending on <code>frequency</code>. This column
+repeats the same value for all rows in a single kelp area segment</p></li>
 <li><p><code>quarter</code>*: If <code>frequency == "quarterly"</code>, the quarter in the time series, otherwise not present</p></li>
 <li><p><code>year</code>: Year in the time series</p></li>
 <li><p><code>date</code>: date representation of the year/quarter, for simpler plotting</p></li>

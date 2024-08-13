@@ -76,7 +76,7 @@ the <a href="https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&a
 Data Portal</a>, and the shapefile that defines the kelp segment
 polygons of interest. The kelp segments shapefile is a polygon shapefile
 with at least one attribute, <code>Segment_ID</code>, that defines the
-kelp area segments of interest.</p>
+kelp area segments of interest with the WGS 84 CRS (EPSG:4326).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lter_file_path</span> <span class="op">&lt;-</span> <span class="st">"../data/LandsatKelpBiomass_2023_Q3_withmetadata.nc"</span></span>
 <span><span class="va">kelp_segments_file_path</span> <span class="op">&lt;-</span> <span class="st">"../data/uswc_2023_v1"</span></span></code></pre></div>
@@ -292,9 +292,10 @@ the given segment. This column repeats the same value for all rows in a
 single kelp area segment</li>
 <li>
 <code>historical_med</code>: The historical (1984-2013) median kelp
-area for the segment. The median is computed across the annualized kelp
-area values. This column repeats the same value for all rows in a single
-kelp area segment</li>
+area for the segment. The median is computed across the quarterly or
+annualized kelp area values, depending on <code>frequency</code>. This
+column repeats the same value for all rows in a single kelp area
+segment</li>
 <li>
 <code>quarter</code>: The quarter in the time series. Not present in
 the annual time series</li>
@@ -480,7 +481,7 @@ plot of chunk time_series_plot_comparison
 <div class="section level2">
 <h2 id="kelp-status">Kelp status<a class="anchor" aria-label="anchor" href="#kelp-status"></a>
 </h2>
-<p>The status of kelp segments can be computed for years after the
+<p>The status of kelp segments can be computed relative to the
 historical baseline (1984 - 2013) with the
 <code><a href="../reference/get_kelp_status.html">get_kelp_status()</a></code> function. This function uses the computed
 time series and kelp presence data frames from the
