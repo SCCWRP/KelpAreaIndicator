@@ -33,7 +33,7 @@ Provide the file paths to the Landsat kelp area data, downloaded from the [EDI D
 
 ```{r setup}
 lter_file_path <- "../data/LandsatKelpBiomass_2023_Q3_withmetadata.nc"
-kelp_segments_file_path <- "../data/uswc_2023_v1"
+kelp_segments_file_path <- "../data/uswc_2024_v2"
 ```
 
 ## Assigning segments to Landsat pixels
@@ -64,7 +64,7 @@ segmented_landsat_data_whole_pixels
 If a kelp segment never contains any pixels with kelp coverage, these segments are represented by a single row of `NA` values for the entire time series.
 ```{r show_na_segment}
 segmented_landsat_data |>
-  dplyr::filter(Segment_ID == "CA_103")
+  dplyr::filter(Segment_ID == "CA_87")
 ```
 
 ## Kelp presence
@@ -161,7 +161,7 @@ q3_annual_ts
 
 
 ## Plotting time series
-Compare different methods of annualization applied to the `CA_78` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. Here, we've modified it and added more `ggplot2` line layers to visualize the difference between the `max_first`, `sum_first`, and `Q3` annualization methods.
+Compare different methods of annualization applied to the `CA_70` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. Here, we've modified it and added more `ggplot2` line layers to visualize the difference between the `max_first`, `sum_first`, and `Q3` annualization methods.
 ```{r time_series_plot_comparison, fig.dpi=300, fig.height = 4, fig.width = 7.11, out.height="400px", out.width="95%", fig.align='center'}
 # combine all methods into a single data frame for plotting
 annual_ts <- dplyr::bind_rows(
@@ -172,13 +172,13 @@ annual_ts <- dplyr::bind_rows(
 
 # for grey background lines in plot
 other_ts <- annual_ts |>
-  dplyr::filter(Segment_ID == "CA_78") |>
+  dplyr::filter(Segment_ID == "CA_70") |>
   dplyr::rename(others = method)
 
 plot_time_series(
   kelp_area_time_series = annual_ts,
   type = "absolute",
-  segment_id = "CA_78",
+  segment_id = "CA_70",
   color = method
 ) +
   ggplot2::geom_line(
@@ -209,13 +209,13 @@ kelp_status_2020 <- get_kelp_status(
 kelp_status_2020
 ```
 
-```{r kelp_status_CA_78}
-kelp_status_CA_78 <- get_kelp_status(
+```{r kelp_status_CA_70}
+kelp_status_CA_70 <- get_kelp_status(
   annual_time_series = sum_first_annual_ts,
   kelp_presence = kelp_presence,
-  segment_id = "CA_78"
+  segment_id = "CA_70"
 )
 
-kelp_status_CA_78
+kelp_status_CA_70
 ```
 
