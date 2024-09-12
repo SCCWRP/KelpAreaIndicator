@@ -8,6 +8,8 @@
 #' * "historical": kelp area relative to the historical median, expressed as a percentage
 #' @param segment_id The segment ID(s) to plot. The default option `segment_id = NULL` will plot
 #' the first segment in the time series
+#' @param options Options for plotting trend, created by [KelpAreaIndicator::trend_options()].
+#' Default is to plot no trend
 #'
 #' @return ggplot object for the time series
 #' @export
@@ -15,17 +17,21 @@ plot_time_series <- function(
     kelp_area_time_series,
     ...,
     type = c("absolute", "percent", "historical"),
+    options = trend_options(),
     segment_id = NULL) {
 
   type <- rlang::arg_match(type)
 
+  if (!inherits(options, "KelpAreaIndicator_trend_options")) {
+    rlang::abort("`options` must be created by `trend_options()`")
+  }
 
   if (is.null(segment_id)) {
     segment_id <- sort(kelp_area_time_series$Segment_ID)[1]
   }
 
   if (!is.null(segment_id) & !all(segment_id %in% kelp_area_time_series$Segment_ID)) {
-    stop("`segment_id` not present in `kelp_area_time_series`")
+    rlang::abort("`segment_id` not present in `kelp_area_time_series`")
   }
 
   kelp_area_time_series <- kelp_area_time_series |>
@@ -46,17 +52,77 @@ plot_time_series <- function(
     historical = "% of Historical Median"
   )
 
-  if (length(segment_id) > 1) {
-    base_plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, group = Segment_ID, ...))
-  }
-  else {
-    base_plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = date, y = y_val, ...))
+  least_recent_year <- max(plot_data$date) |>
+    format("%Y") |>
+    as.numeric()
+
+  least_recent_year <- (least_recent_year - options$num_recent_years + 1) |>
+    paste0("-01-01") |>
+    as.Date()
+
+
+  date_range <- c(min(plot_data$date), max(plot_data$date))
+  y_range <- c(0, NA)
+  if (options$only_recent) {
+    date_range <- c(least_recent_year, max(plot_data$date))
+    y_range <- c(0, max(plot_data[plot_data$date >= date_range[1], "y_val"]))
   }
 
-  time_series_plot <- base_plot +
+  trend_layer <- function(...) NULL
+  if (!is.null(options$trend)) {
+    median_data_recent <- plot_data |>
+      dplyr::filter(date >= least_recent_year) |>
+      dplyr::group_by(Segment_ID) |>
+      dplyr::summarize(
+        x = min(date),
+        xend = max(date),
+        y = median(y_val, na.rm = TRUE),
+        yend = median(y_val, na.rm = TRUE)
+      ) |>
+      dplyr::mutate(median_group = "Recent")
+
+    median_data_historical <- plot_data |>
+      dplyr::filter(date >= as.Date("1984-01-01") & date <= as.Date("2013-01-01")) |>
+      dplyr::group_by(Segment_ID) |>
+      dplyr::summarize(
+        x = min(date),
+        xend = max(date),
+        y = median(y_val, na.rm = TRUE),
+        yend = median(y_val, na.rm = TRUE)
+      ) |>
+      dplyr::mutate(median_group = "Historical")
+
+    median_stat_data <- dplyr::bind_rows(median_data_recent, median_data_historical)
+
+    trend_layer <- function(trend, ...) {
+      switch (trend,
+        linear = rlang::inject(
+          ggplot2::geom_smooth(
+            method = "lm",
+            formula = y ~ x,
+            se = FALSE,
+            !!!rlang::list2(...)
+          )
+        ),
+        median = rlang::inject(
+          ggplot2::geom_segment(
+            data = median_stat_data,
+            mapping = ggplot2::aes(x = x, y = y, xend = xend, yend = yend),
+            inherit.aes = FALSE,
+            !!!rlang::list2(...)
+          )
+        )
+      )
+    }
+  }
+
+  time_series_plot <- ggplot2::ggplot(
+    data = plot_data, mapping = ggplot2::aes(x = date, y = y_val, group = Segment_ID, ...)
+  ) +
+    trend_layer(options$trend, !!!options$aes) +
     ggplot2::geom_line() +
-    ggplot2::lims(y = c(0, NA)) +
-    ggplot2::scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+    ggplot2::scale_x_date(limits = date_range, date_breaks = "1 year", date_labels = "%Y") +
+    ggplot2::lims(y = y_range) +
     ggplot2::labs(y = y_lab, x = "Year", color = "Kelp Segment") +
     ggplot2::theme_bw() +
     ggplot2::theme(
@@ -71,3 +137,57 @@ plot_time_series <- function(
   time_series_plot
 }
 
+#' Trend plotting options
+#'
+#' @description
+#' Use these options to add/modify a `ggplot2` layer to [KelpAreaIndicator::plot_time_series()],
+#' representing the trend of the time series.
+#'
+#' @param ... Named parameters to pass to the aesthetics of the `ggplot2` layer that controls the
+#' trend visualization. In particular:
+#' * alpha
+#' * color
+#' * group
+#' * linetype
+#' * linewidth
+#'
+#' @param trend Which type of trend to add. One of `NULL`, "linear", or "median".
+#' * `NULL`: no trend is plotted
+#' * "linear": plots a linear regression
+#' * "median": plots median values of the historical baseline and/or "recent" years
+#' @param only_recent Whether to plot the trend only for the "recent" time period, defined by `num_recent_years`
+#' @param num_recent_years The number of years before the latest year to consider "recent"
+#'
+#' @return object of class `KelpAreaIndicator_trend_options` for use in [KelpAreaIndicator::plot_time_series()]
+#' @export
+#'
+trend_options <- function(..., trend = NULL, only_recent = FALSE, num_recent_years = 10) {
+  dots <- list(...)
+  if (length(dots) > 0 & !rlang::is_named(dots)) {
+    rlang::abort("all trend line aesthetics passed to `...` in `trend_options()` must be named")
+  }
+
+  if (!is.null(trend)) {
+    if (!trend %in% c("linear", "median")) {
+      rlang::abort("`trend` must be NULL, \"linear\", or \"median\" ")
+    }
+  }
+
+  if (!is.numeric(num_recent_years) | length(num_recent_years) != 1) {
+    rlang::abort("`num_recent_years` must be an integer vector of length 1")
+  }
+
+  if (!is.logical(only_recent) | length(only_recent) != 1) {
+    rlang::abort("`only_recent` must be a logical vector of length 1")
+  }
+
+  structure(
+    list(
+      trend = trend,
+      only_recent = only_recent,
+      num_recent_years = as.integer(num_recent_years),
+      aes = dots
+    ),
+    class = "KelpAreaIndicator_trend_options"
+  )
+}

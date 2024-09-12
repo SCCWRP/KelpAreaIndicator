@@ -32,7 +32,7 @@ library(KelpAreaIndicator)
 Provide the file paths to the Landsat kelp area data, downloaded from the [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=74), and the shapefile that defines the kelp segment polygons of interest. The kelp segments shapefile is a polygon shapefile with at least one attribute, `Segment_ID`, that defines the kelp area segments of interest with the WGS 84 CRS (EPSG:4326).
 
 ```{r setup}
-lter_file_path <- "../data/LandsatKelpBiomass_2023_Q3_withmetadata.nc"
+lter_file_path <- "../data/LandsatKelpBiomass_2024_Q2_withmetadata.nc"
 kelp_segments_file_path <- "../data/uswc_2024_v2"
 ```
 
@@ -161,7 +161,9 @@ q3_annual_ts
 
 
 ## Plotting time series
-Compare different methods of annualization applied to the `CA_70` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. Here, we've modified it and added more `ggplot2` line layers to visualize the difference between the `max_first`, `sum_first`, and `Q3` annualization methods.
+Compare different methods of annualization applied to the `CA_70` segment below. The `plot_time_series()` function is a convenience function to plot the time series for a particular segment. This function also supports adding a trend line, with the `options` argument and `trend_options()` function. See this function's help page for more information.
+
+Here, we've added more `ggplot2` line layers to visualize the difference between the `max_first`, `sum_first`, and `Q3` annualization methods.
 ```{r time_series_plot_comparison, fig.dpi=300, fig.height = 4, fig.width = 7.11, out.height="400px", out.width="95%", fig.align='center'}
 # combine all methods into a single data frame for plotting
 annual_ts <- dplyr::bind_rows(

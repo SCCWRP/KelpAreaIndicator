@@ -8,6 +8,7 @@ plot_time_series(
   kelp_area_time_series,
   ...,
   type = c("absolute", "percent", "historical"),
+  options = trend_options(),
   segment_id = NULL
 )
 }
@@ -22,6 +23,9 @@ plot_time_series(
 \item "percent": kelp area relative to the maximum occupiable area, expressed as a percentage
 \item "historical": kelp area relative to the historical median, expressed as a percentage
 }}
+
+\item{options}{Options for plotting trend, created by \code{\link[=trend_options]{trend_options()}}.
+Default is to plot no trend}
 
 \item{segment_id}{The segment ID(s) to plot. The default option \code{segment_id = NULL} will plot
 the first segment in the time series}
