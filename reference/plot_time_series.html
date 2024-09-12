@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">KelpAreaIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,7 @@
 <span>  <span class="va">kelp_area_time_series</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"absolute"</span>, <span class="st">"percent"</span>, <span class="st">"historical"</span><span class="op">)</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="trend_options.html">trend_options</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  segment_id <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -64,6 +65,11 @@
 <li><p>"percent": kelp area relative to the maximum occupiable area, expressed as a percentage</p></li>
 <li><p>"historical": kelp area relative to the historical median, expressed as a percentage</p></li>
 </ul></dd>
+
+
+<dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
+<dd><p>Options for plotting trend, created by <code><a href="trend_options.html">trend_options()</a></code>.
+Default is to plot no trend</p></dd>
 
 
 <dt id="arg-segment-id">segment_id<a class="anchor" aria-label="anchor" href="#arg-segment-id"></a></dt>
