@@ -50,7 +50,7 @@ extract_time_series <- function(
   # that they are all in the segmented_landsat_data
   if (!is.null(segment_id)) {
     if (!all(segment_id %in% segmented_landsat_data$Segment_ID)) {
-      stop("not all values in `segment_id` are present in the segmented Landsat data")
+      rlang::abort("not all values in `segment_id` are present in the segmented Landsat data")
     }
     segmented_landsat_data <- segmented_landsat_data |>
       dplyr::filter(Segment_ID %in% segment_id)

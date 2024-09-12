@@ -27,13 +27,13 @@ get_kelp_status <- function(
   # that they are all in the kelp_segments shapefile
   if (!is.null(segment_id)) {
     if (!all(segment_id %in% annual_time_series$Segment_ID)) {
-      stop("not all values in `segment_id` are present in the annual time series")
+      rlang::abort("not all values in `segment_id` are present in the annual time series")
     }
     annual_time_series <- annual_time_series |>
       dplyr::filter(Segment_ID %in% segment_id)
   }
   if ("quarter" %in% names(annual_time_series)) {
-    stop("can only compute kelp status for the annualized time series")
+    rlang::abort("can only compute kelp status for the annualized time series")
   }
   if (is.null(status_year)) {
     status_year <- max(annual_time_series$year)
