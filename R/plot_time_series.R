@@ -122,7 +122,7 @@ plot_time_series <- function(
     trend_layer(options$trend, !!!options$aes) +
     ggplot2::geom_line() +
     ggplot2::scale_x_date(limits = date_range, date_breaks = "1 year", date_labels = "%Y") +
-    ggplot2::lims(y = y_range) +
+    ggplot2::coord_cartesian(ylim = y_range) +
     ggplot2::labs(y = y_lab, x = "Year", color = "Kelp Segment") +
     ggplot2::theme_bw() +
     ggplot2::theme(
