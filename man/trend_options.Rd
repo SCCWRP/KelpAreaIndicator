@@ -29,7 +29,7 @@ trend visualization. In particular:
 \item{num_recent_years}{The number of years before the latest year to consider "recent"}
 }
 \value{
-object of class \code{KelpAreaIndicator_trend_options} for use with \code{\link[=plot_time_series]{plot_time_series()}}
+object of class \code{KelpAreaIndicator_trend_options} for use in \code{\link[=plot_time_series]{plot_time_series()}}
 }
 \description{
 Use these options to add/modify a \code{ggplot2} layer to \code{\link[=plot_time_series]{plot_time_series()}},
