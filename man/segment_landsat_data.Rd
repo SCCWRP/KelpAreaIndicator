@@ -9,7 +9,7 @@ segment_landsat_data(
   lter_file_path,
   kelp_segments_file_path,
   ...,
-  fractional_pixels = TRUE
+  fractional_pixels = FALSE
 )
 }
 \arguments{
