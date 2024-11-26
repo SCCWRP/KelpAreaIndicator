@@ -27,7 +27,7 @@ segment_landsat_data <- function(
     lter_file_path,
     kelp_segments_file_path,
     ...,
-    fractional_pixels = TRUE) {
+    fractional_pixels = FALSE) {
 
   rlang::check_dots_empty()
 
@@ -66,14 +66,14 @@ segment_landsat_data <- function(
 
   # spatial join the landsat data with the segment shapefile so that
   # each recorded pixel is assigned a kelp segment.
+  segmented_landsat_data <- segmented_landsat_data |>
+    sf::st_as_sf(coords = c("lon", "lat"), crs = sf::st_crs(4326)) |>
+    sf::st_join(kelp_segments, join = sf::st_covered_by, left = FALSE)
+
   # not all segments will have pixels, and so will be left out of the
   # initial spatial join. so, use a right join on the kelp_segments
   # shapefile to ensure every Segment_ID of interest is represented in
   # the final data output with NA rows
-  segmented_landsat_data <- segmented_landsat_data |>
-    sf::st_as_sf(coords = c("lon", "lat"), crs = sf::st_crs(4326)) |>
-    sf::st_join(kelp_segments, join = sf::st_within, left = FALSE)
-
   segmented_landsat_data <- segmented_landsat_data |>
     dplyr::mutate(
       lon = sf::st_coordinates(segmented_landsat_data)[, 1],
