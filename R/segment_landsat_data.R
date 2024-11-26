@@ -27,7 +27,7 @@ segment_landsat_data <- function(
     lter_file_path,
     kelp_segments_file_path,
     ...,
-    fractional_pixels = TRUE) {
+    fractional_pixels = FALSE) {
 
   rlang::check_dots_empty()
 
