@@ -1,6 +1,6 @@
 Package: KelpAreaIndicator
 Title: Explore Landsat Kelp Area Data
-Version: 0.0.1.9001
+Version: 0.0.2
 Authors@R: c(
         person("Nicholas", "Lombardo", , "nicholasl@sccwrp.org", role = c("aut", "cre")),
         person("SCCWRP", role = c("cph", "fnd"))
